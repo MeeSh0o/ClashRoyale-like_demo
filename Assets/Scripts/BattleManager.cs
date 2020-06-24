@@ -7,8 +7,8 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
 
-    public Objects 玩家;
-    public Objects 敌人;
+    public Unit 玩家;
+    public Unit 敌人;
 
     private void Awake()
     {
