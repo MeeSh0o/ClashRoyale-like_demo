@@ -38,7 +38,12 @@ public class BattleManager : MonoBehaviour
 
     }
 
-    public void BattleStart()
+    public void BattleInitiate()
+    {
+
+    }
+
+    private void SetDeck()
     {
 
     }
