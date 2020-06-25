@@ -16,7 +16,18 @@ public class Soldier : Unit
             agent = proxy.GetComponent<NavMeshAgent>();
         if (obstacle == null)
             obstacle = proxy.GetComponent<NavMeshObstacle>();
+    }
 
+    private void Start()
+    {
+        if (!group.Soldiers.Contains(this))
+        {
+            group.Soldiers.Add(this);
+        }
+        if (!group.Childs.Contains(this))
+        {
+            group.Childs.Add(this);
+        }
     }
 
     public override void Update()

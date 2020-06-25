@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using UnityEngine;
@@ -14,6 +15,9 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        LoadData();
+
     }
 
     public void GameOver()
@@ -28,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadData()
     {
-        unitData = DataLoader.instance.LoadData("Unit");
+        unitData = DataLoader.instance.LoadData("Unit.xlsx");
     }
 }
 

@@ -27,7 +27,7 @@ public class DataLoader : MonoBehaviour
     public List<List<string>> LoadData(string fileName)
     {
         // StreamingAssets目录下的  党员信息.xlsx文件的路径：Application.streamingAssetsPath + "/党员信息.xlsx" 
-        FileStream fileStream = File.Open(Application.streamingAssetsPath + fileName, FileMode.Open, FileAccess.Read);
+        FileStream fileStream = File.Open(Application.streamingAssetsPath + "/" + fileName, FileMode.Open, FileAccess.Read);
         IExcelDataReader excelDataReader = ExcelReaderFactory.CreateOpenXmlReader(fileStream);
         // 表格数据全部读取到result里
         DataSet result = excelDataReader.AsDataSet();

@@ -75,6 +75,9 @@ public class Unit : MonoBehaviour
         if (bulletSpawner == null)
             bulletSpawner = transform.Find("BulletSpawner");
 
+        if (group == null)
+            group = GameObject.Find(Fold).GetComponent<Group>();
+
         data = new UnitData();
     }
 
@@ -148,6 +151,14 @@ public class Unit : MonoBehaviour
                     SwitchState(UnitState.idle);
                 }
             }
+            else
+            {
+                SwitchState(UnitState.idle);
+            }
+        }
+        else
+        {
+            SwitchState(UnitState.idle);
         }
 
     }
@@ -161,7 +172,7 @@ public class Unit : MonoBehaviour
     }
 
     /// <summary>
-    /// 非存活状态，出现在放置角色和角色死亡后
+    /// 非存活状态，出现在角色死亡后
     /// </summary>
     public virtual void Death()
     {

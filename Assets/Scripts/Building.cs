@@ -19,6 +19,14 @@ public class Building : Unit
         {
             BattleManager.instance.EnemyBuilding.Add(this);
         }
+        if (!group.Buildings.Contains(this))
+        {
+            group.Buildings.Add(this);
+        }
+        if (!group.Childs.Contains(this))
+        {
+            group.Childs.Add(this);
+        }
     }
 
     public override void Idle()

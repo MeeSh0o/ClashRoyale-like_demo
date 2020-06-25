@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Group : MonoBehaviour
 {
-    List<Unit> Childs;
+    public List<Unit> Childs;
     public string Flod = "Player";
 
     public List<Unit> Buildings = new List<Unit>();
@@ -29,12 +29,26 @@ public class Group : MonoBehaviour
 
         Childs.Add(unit);
     }
+    public void SpawnUnit(int id, Vector3 position)
+    {
+        GameObject prefab = id < 2000 ? BattleManager.instance.prefabBuilding : BattleManager.instance.prefabSoldier;
+        UnitData unitData = Tools.GetUnitData(id);
+        for(int i = 0; i < unitData.Number; i++)
+        {
+            // TODO 需要计算一次position 的最近有效位置
+            Spawn(prefab, position, unitData);
+        }
+        
+    }
+
+
 
     public void Die(Unit unit)
     {
         if (Childs.Contains(unit))
         {
-            unit.gameObject.SetActive(false);
+            //unit.gameObject.SetActive(false);
+            Destroy(unit.gameObject);
             CheckUnitRemain();
         }
         else
@@ -46,7 +60,7 @@ public class Group : MonoBehaviour
     /// <summary>
     /// 检查还剩几个Unit
     /// </summary>
-    private void CheckUnitRemain()
+    private int CheckUnitRemain()
     {
         int unitAlive = 0;
         for (int i = 0; i < Childs.Count; i++)
@@ -56,18 +70,8 @@ public class Group : MonoBehaviour
                 unitAlive++;
             }
         }
+        return unitAlive;
     }
 
-    public void SpawnUnit(int id,Vector3 position)
-    {
-        for(int i = 0; i < GameManager.instance.unitData.Count; i++)
-        {
-            if( Convert.ToDouble(GameManager.instance.unitData[i][0]).Equals(id))
-            {
 
-            }
-        }
-        UnitData data = new UnitData();
-
-    }
 }
