@@ -5,18 +5,18 @@ using UnityEngine.AI;
 
 public class Unit : MonoBehaviour
 {
-    public Camera cam;
+    public int Hp;
 
     public Transform model;
-    public Transform proxy;
-
-    public NavMeshAgent agent;
+    public Group group;
     public NavMeshObstacle obstacle;
+    public AttackTrigger attackTrigger;
+    public Transform bulletSpawner;
 
     /// <summary>
     /// 本单位参数
     /// </summary>
-    public UnitData data = null;
+    public UnitData data;
 
     /// <summary>
     /// 状态
@@ -26,29 +26,30 @@ public class Unit : MonoBehaviour
     /// <summary>
     /// 当前仇恨对象
     /// </summary>
-    public Unit target 
+    public Unit Target
     {
         get
         {
-            if(_target == null)
-            {
-                SetTarget();
-            }
             return _target;
         }
         set
         {
             _target = value;
-            Debug.LogWarning("外部设置单位目标警告", gameObject);
         }
     }
+    [SerializeField]
     private Unit _target;
     /// <summary>
     /// 登记过的仇恨对象列表
     /// </summary>
-    List<Unit> EnemiesInField;
+    public List<Unit> EnemiesInField = new List<Unit>();
+    ///// <summary>
+    ///// 被登记过的仇恨对象列表
+    ///// </summary>
+    //public List<Unit> InEnemiesField = new List<Unit>();
+
     /// <summary>
-    /// 查看阵营
+    /// 阵营
     /// </summary>
     public string Fold
     {
@@ -61,22 +62,20 @@ public class Unit : MonoBehaviour
             model.tag = value;
         }
     }
-    private void Awake()
+    public virtual void Awake()
     {
-        agent = proxy.GetComponent<NavMeshAgent>();
-        obstacle = proxy.GetComponent<NavMeshObstacle>();
         EnemiesInField = new List<Unit>();
-        this.data = new UnitData();
-    }
 
-    /// <summary>
-    /// 激活,需要限定激活范围
-    /// </summary>
-    public void Spawn(Vector3 position, UnitData data)
-    {
-        proxy.position = position;
-        model.position = position;
-        this.data = new UnitData(data);
+        if (model == null)
+            model = transform.Find("model");
+
+        if (attackTrigger == null)
+            attackTrigger = transform.Find("AttackTrigger").GetComponent<AttackTrigger>();
+
+        if (bulletSpawner == null)
+            bulletSpawner = transform.Find("BulletSpawner");
+
+        data = new UnitData();
     }
 
     public enum UnitState
@@ -87,7 +86,8 @@ public class Unit : MonoBehaviour
         death
     }
 
-    void Update()
+    public float attackTime = 0;
+    public virtual void Update()
     {
         switch (state)
         {
@@ -104,10 +104,7 @@ public class Unit : MonoBehaviour
                 Run();
                 break;
         }
-
-        // 更新模型以跟上实际位置
-        model.position = Vector3.Lerp(new Vector3(model.position.x, model.position.y, model.position.z), new Vector3(proxy.position.x, model.position.y, proxy.position.z), Time.deltaTime * 3.5f);
-        model.rotation = proxy.rotation;
+        attackTime += Time.deltaTime;
     }
 
     /// <summary>
@@ -116,150 +113,221 @@ public class Unit : MonoBehaviour
     public virtual void Idle()
     {
         SetTarget(EnemyCheck());
-        if (target)
+        if(Target!= null)
         {
-            SwitchState(UnitState.run);
+            SwitchState(UnitState.attack);
         }
     }
+
+
     /// <summary>
     /// 攻击状态，作用是站着不动打人
     /// </summary>
     public virtual void Attack()
     {
-        if(target == null || !target.gameObject.activeSelf || target.state == UnitState.death) // 死了就重新找目标
+        if (Target != null)
         {
-            SwitchState(UnitState.idle);
+            if (Target.gameObject.activeSelf)
+            {
+                if (Tools.Distance(model.transform, Target.model.transform) <= data.HitRange)
+                {
+                    if (attackTime >= data.AttackTime)
+                    {
+                        attackTime = 0;
+                        Bullet bullet = Instantiate(BattleManager.instance.prefabBullet, bulletSpawner.position, Quaternion.identity, GameManager.instance.transform).GetComponent<Bullet>();
+
+                        for (int i = 0; i < data.ShootNum; i++)
+                        {
+                            Vector3 offset = Random.Range(0, data.AttackOffset) * new Vector3(Random.value, 0, Random.value).normalized;
+                            bullet.SetBullet(Target.model.gameObject, Fold, data.Atk, data.BulletSpeed, offset);
+                        }
+                    }
+                }
+                else
+                {
+                    SwitchState(UnitState.idle);
+                }
+            }
         }
-        if (Tools.Distance(target.model.transform, model.transform) > data.HitRange) // 打不着就追
-        {
-            SwitchState(UnitState.run);
-        }
+
     }
+
     /// <summary>
     /// 移动状态，作用是移动或者追人，追人需判断是否可到达，不可到达则放弃
     /// </summary>
     public virtual void Run()
     {
-        agent.SetDestination(target.model.position);
-        if(Tools.Distance(target.model.transform,model.transform) <= data.HitRange) // 追到了就打
-        {
-            SwitchState(UnitState.attack);
-        }
-        else if(Tools.Distance(target.model.transform, model.transform) <= data.ScanRange) // 追不到就放弃
-        {
-            //SwitchState(UnitState.idle);
-        }
+
     }
+
     /// <summary>
     /// 非存活状态，出现在放置角色和角色死亡后
     /// </summary>
     public virtual void Death()
     {
-
+        if (group != null)
+        {
+            group.Die(this);
+        }
+        gameObject.SetActive(false);
     }
 
     /// <summary>
     /// 切换状态
     /// </summary>
     /// <param name="state"></param>
-    public void SwitchState(UnitState state)
+    public virtual void SwitchState(UnitState state)
     {
         switch (state)
         {
             case UnitState.attack:
-                SwitchObstacle(false);
                 this.state = UnitState.attack;
                 break;
             case UnitState.death:
-                SwitchObstacle(false);
                 this.state = UnitState.death;
                 break;
             case UnitState.idle:
-                SwitchObstacle(false);
                 this.state = UnitState.idle;
                 break;
             case UnitState.run:
-                SwitchObstacle(true);
                 this.state = UnitState.run;
                 break;
         }
     }
 
-    /// <summary>
-    /// 切换Obstacle
-    /// </summary>
-    /// <param name="isAgent"></param>
-    public void SwitchObstacle(bool isAgent)
-    {
-        agent.enabled = isAgent;
-        obstacle.enabled = !isAgent;
-    }
+
+
     /// <summary>
     /// 添加敌人到探测列表中
     /// </summary>
     /// <param name="enemy"></param>
     public void FindEnemy(Unit enemy)
     {
-        if (!EnemiesInField.Contains(enemy))
-        {
-            EnemiesInField.Add(enemy);
-        }
+        Debug.Log("添加敌人" + gameObject + enemy);
+
+        EnemiesInField.Add(enemy);
+    }
+
+    /// <summary>
+    /// 将敌人从探测列表移除
+    /// </summary>
+    /// <param name="enemy"></param>
+    public void EnemyLeave(Unit enemy)
+    {
+        Debug.Log("移除敌人" + gameObject + enemy);
+
+        EnemiesInField.Remove(enemy);
     }
     /// <summary>
     /// 更新记录的敌人信息
     /// </summary>
-    private Unit EnemyCheck()
+    public Unit EnemyCheck()
     {
         Unit nearestOne = null;
         float dist = data.ScanRange;
-        if (EnemiesInField.Count > 0)
-        {
-            for (int i = 0; i <EnemiesInField.Count; i++)
-            {
-                Unit temp = EnemiesInField[i];
 
-                // 剔除已经死掉的
-                if (target == null || !temp.gameObject.activeSelf) 
-                {
-                    EnemiesInField.Remove(temp);
-                    continue;
-                }
-                // 跳过死亡的
-                if(temp.state == UnitState.death)
-                {
-                    continue;
-                }
-                
-                float tdis = Tools.Distance(temp.transform, model.transform);
-                
-                // 找到最近的那个
-                if(tdis <= dist)
-                {
-                    nearestOne = temp;
-                    dist = tdis;
-                }
+        for (int i = EnemiesInField.Count - 1; i >= 0; i--)
+        {
+            Unit temp = EnemiesInField[i];
+
+            // 跳过死亡的
+            if (temp.state == UnitState.death)
+            {
+                continue;
             }
+
+            float tdis = Tools.Distance(temp.transform, model.transform);
+
+            // 找到最近的那个
+            if (tdis <= dist)
+            {
+                nearestOne = temp;
+                dist = tdis;
+            }
+
         }
+
         return nearestOne;
     }
 
-    public void SetTarget(Unit target = null) 
+    public virtual void SetTarget(Unit target = null)
     {
-        if (target != null) _target = target;
-        else
+        if (target != null)
         {
-            // 请求从建筑物中选取
-            //临时：
-            switch (Fold)
-            {
-                case "Player":
-                    _target = GameObject.Find("帅阵").GetComponent<Unit>();
-                    break;
-                default:
-                    _target = GameObject.Find("将台").GetComponent<Unit>();
-                    break;
-            }
+            Target = target;
         }
+    }
+
+    public virtual void Hit(int damage)
+    {
+        Hp -= damage;
+        if (Hp <= 0)
+        {
+            SwitchState(UnitState.death);
+        }
+    }
+}
+
+/// <summary>
+/// 单位数据
+/// </summary>
+public class UnitData
+{
+    public int ID;
+    public int Lev;
+    public string Name;
+    public int Hp;
+    public int Atk;
+    public int Number;
+    public float Size;
+    public float Speed;
+    public float Height;
+    public int Priority;
+    public float HitRange;
+    public float ScanRange;
+    public float AttackTime;
+    public float AttackOffset;
+    public float ShootNum;
+    public float BulletSpeed;
+
+    public UnitData()
+    {
+        ID = 0;
+        Lev = 0;
+        Name = "default";
+        Hp = 10;
+        Atk = 1;
+        Number = 1;
+        Size = 1;
+        Speed = 0;
+        Height = 0;
+        Priority = 50;
+        HitRange = 6f;
+        ScanRange = 1000;
+        AttackTime = 1f;
+        AttackOffset = 0;
+        ShootNum = 1;
+        BulletSpeed = 5;
+    }
+
+    public UnitData(UnitData data)
+    {
+        ID = data.ID;
+        Lev = data.Lev;
+        Name = data.Name;
+        Hp = data.Hp;
+        Atk = data.Atk;
+        Number = data.Number;
+        Size = data.Size;
+        Speed = data.Speed;
+        Height = data.Height;
+        Priority = data.Priority;
+        HitRange = data.HitRange;
+        ScanRange = data.ScanRange;
+        AttackTime = data.AttackTime;
+        AttackOffset = data.AttackOffset;
+        ShootNum = data.ShootNum;
+        BulletSpeed = data.BulletSpeed;
     }
 }
 
@@ -281,80 +349,3 @@ public class Unit : MonoBehaviour
  *          如果血量归零，切换到death，被pool回收
  * 
  */
-
-    /// <summary>
-    /// 单位数据
-    /// </summary>
-public class UnitData
-{
-    public int ID;
-    public int Lev;
-    public float Size;
-    public float Speed;
-    public float Height;
-    public int Priority;
-    public float HitRange;
-    public float ScanRange;
-
-    public UnitData()
-    {
-        ID = 0;
-        Lev = 0;
-        Size = 1;
-        Speed = 0;
-        Height = 0;
-        Priority = 50;
-        HitRange = 1.5f;
-        ScanRange = 1000;
-        Debug.LogWarning("有新的空角色数据被创建");
-    }
-
-    public UnitData(UnitData data)
-    {
-        ID = data.ID;
-        Lev = data.Lev;
-        Size = data.Size;
-        Speed = data.Speed;
-        Height = data.Height;
-        Priority = data.Priority;
-        HitRange = data.HitRange;
-        ScanRange = data.ScanRange;
-    }
-}
-
-//抄的有关RVO代码
-public class enemyMovement : MonoBehaviour
-{
-    public Transform player;
-    public Transform model;
-    public Transform proxy;
-    NavMeshAgent agent;
-    NavMeshObstacle obstacle;
-    void Start()
-    {
-        agent = proxy.GetComponent<NavMeshAgent>();
-        obstacle = proxy.GetComponent<NavMeshObstacle>();
-    }
-    void Update()
-    {
-        // Test if the distance between the agent (which is now the proxy) and the player 
-        // is less than the attack range (or the stoppingDistance parameter)
-        if ((player.position - proxy.position).sqrMagnitude < Mathf.Pow(agent.stoppingDistance, 2))
-        {
-            // If the agent is in attack range, become an obstacle and 
-            // disable the NavMeshAgent component 
-            obstacle.enabled = true;
-            agent.enabled = false;
-        }
-        else
-        {
-            // If we are not in range, become an agent again 
-            obstacle.enabled = false;
-            agent.enabled = true;
-            // And move to the player's position 
-            agent.destination = player.position;
-        }
-        model.position = Vector3.Lerp(model.position, proxy.position, Time.deltaTime * 2);
-        model.rotation = proxy.rotation;
-    }
-}

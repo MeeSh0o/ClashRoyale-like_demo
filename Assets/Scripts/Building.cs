@@ -1,0 +1,46 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Building : Unit
+{
+    public override void Awake()
+    {
+        base.Awake();
+    }
+
+    private void Start()
+    {
+        if(Fold == "Player")
+        {
+            BattleManager.instance.PlayerBuilding.Add(this);
+        }
+        else
+        {
+            BattleManager.instance.EnemyBuilding.Add(this);
+        }
+    }
+
+    public override void Idle()
+    {
+        base.Idle();
+    }
+
+    public override void Attack()
+    {
+        base.Attack();
+    }
+
+    public override void Death()
+    {
+        base.Death();
+
+        obstacle.enabled = false;
+    }
+
+    private void OnDestroy()
+    {
+        List<Unit> list = Fold == "Player" ? BattleManager.instance.PlayerBuilding : BattleManager.instance.EnemyBuilding;
+        list.Remove(this);
+    }
+}

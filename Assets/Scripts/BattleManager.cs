@@ -7,20 +7,21 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
 
-    public Unit 玩家;
-    public Unit 敌人;
+    public Group 玩家;
+    public Group 敌人;
+
+    public List<Unit> PlayerBuilding = new List<Unit>();
+    public List<Unit> EnemyBuilding = new List<Unit>();
+
+
+    public GameObject prefabBullet;
+    public GameObject prefabSoldier;
+    public GameObject prefabBuilding;
+
 
     private void Awake()
     {
-        if (instance != null)
-        {
-            return;
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+        instance = this;
     }
 
     /// <summary>
@@ -43,10 +44,16 @@ public class BattleManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 设置牌组
+    /// </summary>
     private void SetDeck()
     {
 
     }
 
+    public void LoadPrefabs()
+    {
 
+    }
 }

@@ -7,18 +7,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public List<List<string>> unitData;
+
 
     private void Awake()
     {
-        if (instance != null)
-        {
-            return;
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void GameOver()
@@ -29,6 +24,11 @@ public class GameManager : MonoBehaviour
     public void StartBattle()
     {
 
+    }
+
+    public void LoadData()
+    {
+        unitData = DataLoader.instance.LoadData("Unit");
     }
 }
 
