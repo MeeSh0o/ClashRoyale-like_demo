@@ -217,6 +217,9 @@ public class Unit : MonoBehaviour
         Debug.Log("添加敌人" + gameObject + enemy);
 
         EnemiesInField.Add(enemy);
+
+        if(state == UnitState.run)
+            SwitchState(UnitState.idle);
     }
 
     /// <summary>
@@ -235,7 +238,8 @@ public class Unit : MonoBehaviour
     public Unit EnemyCheck()
     {
         Unit nearestOne = null;
-        float dist = data.ScanRange;
+        //float dist = data.ScanRange;
+        float dist = 100;
 
         for (int i = EnemiesInField.Count - 1; i >= 0; i--)
         {

@@ -50,6 +50,7 @@ MonoBehaviour:
   Flod: Player
   Buildings: []
   Soldiers: []
+  Base: {fileID: 8600402488260526886}
 --- !u!1001 &3062726122968290773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -175,7 +176,7 @@ PrefabInstance:
     - target: {fileID: 2928732556368610493, guid: c11abca8706316e4daffae56f9e4b588,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8
+      value: -13
       objectReference: {fileID: 0}
     - target: {fileID: 2928732556368610493, guid: c11abca8706316e4daffae56f9e4b588,
         type: 3}
@@ -220,7 +221,12 @@ PrefabInstance:
     - target: {fileID: 2928732556368610494, guid: c11abca8706316e4daffae56f9e4b588,
         type: 3}
       propertyPath: Hp
-      value: 100
+      value: 2500
+      objectReference: {fileID: 0}
+    - target: {fileID: 2928732557088771325, guid: c11abca8706316e4daffae56f9e4b588,
+        type: 3}
+      propertyPath: m_Radius
+      value: 2.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c11abca8706316e4daffae56f9e4b588, type: 3}
@@ -230,6 +236,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6917026281156413336}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8600402488260526886 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2928732556368610494, guid: c11abca8706316e4daffae56f9e4b588,
+    type: 3}
+  m_PrefabInstance: {fileID: 6917026281156413336}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ffa1406f2588ef4e8b6640707ed9371, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7092078699565744885
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -83,13 +83,14 @@ public class Soldier : Unit
         if (Target == null || Target.state == UnitState.death) // 死了就重新找目标
         {
             SwitchState(UnitState.idle);
+            return;
         }
         agent.SetDestination(Target.model.position);
         if (Tools.Distance(Target.model.transform, model.transform) <= data.HitRange) // 追到了就打
         {
             SwitchState(UnitState.attack);
         }
-        else if (Tools.Distance(Target.model.transform, model.transform) >= data.ScanRange) // 追不到就放弃
+        else if (GetType() == Target.GetType() && Tools.Distance(Target.model.transform, model.transform) >= data.ScanRange) // 追不到就放弃
         {
             SwitchState(UnitState.idle);
         }

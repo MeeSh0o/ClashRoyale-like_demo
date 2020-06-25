@@ -27,20 +27,24 @@ public class Bullet : MonoBehaviour
     }
     private void Update()
     {
-        // 方向修正
-        Vector2 disXZ = new Vector2(Target.transform.position.x, Target.transform.position.z) - new Vector2(transform.position.x, transform.position.z) + new Vector2(offset.x, offset.z);
-        Vector2 targetV = disXZ.normalized * speed;
-
-        Vector2 vXZnow = new Vector2(rb.velocity.x, rb.velocity.z);
-        Vector2 temp = (targetV - vXZnow);
-
-        while (Vector2.Angle(vXZnow + temp, vXZnow) > 45 * Time.deltaTime)
+        if(Target != null)
         {
-            temp *= 0.5f;
+            // 方向修正
+            Vector2 disXZ = new Vector2(Target.transform.position.x, Target.transform.position.z) - new Vector2(transform.position.x, transform.position.z) + new Vector2(offset.x, offset.z);
+            Vector2 targetV = disXZ.normalized * speed;
+
+            Vector2 vXZnow = new Vector2(rb.velocity.x, rb.velocity.z);
+            Vector2 temp = (targetV - vXZnow);
+
+            while (Vector2.Angle(vXZnow + temp, vXZnow) > 45 * Time.deltaTime)
+            {
+                temp *= 0.5f;
+            }
+
+            rb.velocity = new Vector3(vXZnow.x + temp.x, rb.velocity.y, vXZnow.y + temp.y);
+            transform.LookAt(transform.position + rb.velocity);
         }
 
-        rb.velocity = new Vector3(vXZnow.x + temp.x, rb.velocity.y, vXZnow.y + temp.y);
-        transform.LookAt(transform.position + rb.velocity);
 
         if (transform.position.y < -100)
         {

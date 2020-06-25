@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Group : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Group : MonoBehaviour
 
     public List<Unit> Buildings = new List<Unit>();
     public List<Unit> Soldiers = new List<Unit>();
+    public Unit Base;
 
     private void Awake()
     {
@@ -26,6 +28,7 @@ public class Group : MonoBehaviour
         // 给data赋值
         unit.data = data ?? new UnitData();
         unit.Fold = Flod;
+        unit.Hp = unit.data.Hp;
 
         Childs.Add(unit);
     }
@@ -40,7 +43,6 @@ public class Group : MonoBehaviour
         }
         
     }
-
 
 
     public void Die(Unit unit)
@@ -65,7 +67,7 @@ public class Group : MonoBehaviour
         int unitAlive = 0;
         for (int i = 0; i < Childs.Count; i++)
         {
-            if (Childs[i].gameObject.activeSelf)
+            if (Childs[i] != null && Childs[i].gameObject.activeSelf)
             {
                 unitAlive++;
             }
@@ -73,5 +75,26 @@ public class Group : MonoBehaviour
         return unitAlive;
     }
 
+    public void SpawnTest()
+    {
+        int[] array = { 0, 1001, 1002, 2001, 2002, 2003, 2004, 2005 };
+        int id = Random.Range(3, 7);
+        Vector3 position = Base.transform.position + Base.transform.forward * 2f + new Vector3 (Random.Range(-2, 2),0,0);
+        SpawnUnit(array[id], position);
+    }
 
+    public  IEnumerator SpawnTest1()
+    {
+        yield return new WaitForSeconds(1);
+        for(int i = 0; i < 5; i++)
+        {
+            SpawnTest();
+            yield return new WaitForSeconds(3);
+        }
+    }
+
+    public void SpawnTest2()
+    {
+        StartCoroutine(SpawnTest1());
+    }
 }
