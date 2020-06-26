@@ -11,7 +11,7 @@ public class DataLoader : MonoBehaviour
     public static DataLoader instance;
 
     string value;
-    string all;
+    //string all;
 
     private void Awake()
     {
@@ -44,7 +44,7 @@ public class DataLoader : MonoBehaviour
         for (int i = 1; i < rows; i++)
         {
             value = null;
-            all = null;
+            //all = null;
             excelData.Add(new List<string>());
             for (int j = 0; j < columns; j++)
             {

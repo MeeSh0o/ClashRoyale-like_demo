@@ -18,8 +18,9 @@ public class Soldier : Unit
             obstacle = proxy.GetComponent<NavMeshObstacle>();
     }
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         if (!group.Soldiers.Contains(this))
         {
             group.Soldiers.Add(this);

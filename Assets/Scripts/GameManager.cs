@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public List<List<string>> unitData;
 
+    public List<int> PlayerDeck;
+    public List<int> EnemyDeck;
 
     private void Awake()
     {

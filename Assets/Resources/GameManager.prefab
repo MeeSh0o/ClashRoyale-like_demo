@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1806137002}
   - component: {fileID: 1806137001}
   m_Layer: 12
-  m_Name: Cube
+  m_Name: Clicker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,6 +139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91eea3f389b27d479b968c10d3148ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerDeck: d1070000d2070000d3070000d4070000d5070000
+  EnemyDeck: d1070000d2070000d3070000d4070000d5070000
 --- !u!114 &7759667705725686353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,8 +153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bcce0da4f69fff419296a5ff54e6ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  "\u73A9\u5BB6": {fileID: 0}
-  "\u654C\u4EBA": {fileID: 0}
+  playerGroup: {fileID: 0}
+  EnemyGroup: {fileID: 0}
+  PlayerController: {fileID: 0}
+  EnemyController: {fileID: 0}
   PlayerBuilding: []
   EnemyBuilding: []
   prefabBullet: {fileID: 2991987677122176185, guid: 9b82348e93b8e994e98405f110ce0f2b,
@@ -161,6 +165,10 @@ MonoBehaviour:
     type: 3}
   prefabBuilding: {fileID: 2928732556368610492, guid: c11abca8706316e4daffae56f9e4b588,
     type: 3}
+  mareialPlayer: {fileID: 2100000, guid: 51cf1f3b826e6d94e97e63ea4fbb2016, type: 2}
+  mareialEnemy: {fileID: 2100000, guid: bc4b961958d88b4489aa051dbbdd12e8, type: 2}
+  materialBoth: {fileID: 2100000, guid: 437a0f0611826734c806cf9a5f84370c, type: 2}
+  materialNeither: {fileID: 2100000, guid: dfaad18d427108948a91d51388f002d8, type: 2}
 --- !u!114 &1251390821
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,29 +17,23 @@ public class Group : MonoBehaviour
     {
         Childs = new List<Unit>();
     }
-    public void Spawn(GameObject prefab, Vector3 position,UnitData data =null)
-    {
-        // 获取prefab和data
-        // 创建
-        GameObject obj = Instantiate(prefab, position, Quaternion.identity, transform);
-        obj.SetActive(true);
-        
-        Unit unit = obj.GetComponent<Unit>();
-        // 给data赋值
-        unit.data = data ?? new UnitData();
-        unit.Fold = Flod;
-        unit.Hp = unit.data.Hp;
 
-        Childs.Add(unit);
-    }
     public void SpawnUnit(int id, Vector3 position)
     {
         GameObject prefab = id < 2000 ? BattleManager.instance.prefabBuilding : BattleManager.instance.prefabSoldier;
         UnitData unitData = Tools.GetUnitData(id);
         for(int i = 0; i < unitData.Number; i++)
         {
-            // TODO 需要计算一次position 的最近有效位置
-            Spawn(prefab, position, unitData);
+            // 获取prefab和data
+            // 创建
+            GameObject obj = Instantiate(prefab, position, Flod=="Player"? Quaternion.identity: new Quaternion(0,1,0,0), transform);
+            obj.SetActive(true);
+
+            Unit unit = obj.GetComponent<Unit>();
+            // 给data赋值
+            unit.Fold = Flod;
+            unit.id = id;
+            Childs.Add(unit);
         }
         
     }
@@ -79,7 +73,7 @@ public class Group : MonoBehaviour
     {
         int[] array = { 0, 1001, 1002, 2001, 2002, 2003, 2004, 2005 };
         int id = Random.Range(3, 7);
-        Vector3 position = Base.transform.position + Base.transform.forward * 2f + new Vector3 (Random.Range(-2, 2),0,0);
+        Vector3 position = Base.transform.position + Base.transform.forward * 2f + new Vector3 (Random.Range(-2f, 2f),0,0);
         SpawnUnit(array[id], position);
     }
 

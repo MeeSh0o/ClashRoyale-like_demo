@@ -49,7 +49,7 @@ public static class Tools
         UnitData data = new UnitData
         {
             ID = String2Int(GameManager.instance.unitData[dataIndex][0]),
-            Lev = String2Int(GameManager.instance.unitData[dataIndex][1]),
+            PrepareTime = String2Float(GameManager.instance.unitData[dataIndex][1]),
             Name = GameManager.instance.unitData[dataIndex][2],
             Hp = String2Int(GameManager.instance.unitData[dataIndex][3]),
             Atk = String2Int(GameManager.instance.unitData[dataIndex][4]),

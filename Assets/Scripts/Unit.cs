@@ -17,6 +17,7 @@ public class Unit : MonoBehaviour
     /// 本单位参数
     /// </summary>
     public UnitData data;
+    public int id;
 
     /// <summary>
     /// 状态
@@ -78,7 +79,11 @@ public class Unit : MonoBehaviour
         if (group == null)
             group = GameObject.Find(Fold).GetComponent<Group>();
 
-        data = new UnitData();
+    }
+
+    public virtual void Start()
+    {
+        SetData();
     }
 
     public enum UnitState
@@ -214,7 +219,7 @@ public class Unit : MonoBehaviour
     /// <param name="enemy"></param>
     public void FindEnemy(Unit enemy)
     {
-        Debug.Log("添加敌人" + gameObject + enemy);
+        //Debug.Log("添加敌人" + gameObject + enemy);
 
         EnemiesInField.Add(enemy);
 
@@ -228,7 +233,7 @@ public class Unit : MonoBehaviour
     /// <param name="enemy"></param>
     public void EnemyLeave(Unit enemy)
     {
-        Debug.Log("移除敌人" + gameObject + enemy);
+        //Debug.Log("移除敌人" + gameObject + enemy);
 
         EnemiesInField.Remove(enemy);
     }
@@ -281,6 +286,13 @@ public class Unit : MonoBehaviour
             SwitchState(UnitState.death);
         }
     }
+
+    public virtual void SetData()
+    {
+        data = Tools.GetUnitData(id);
+        Hp = data.Hp;
+        gameObject.name = data.Name;
+    }
 }
 
 /// <summary>
@@ -289,7 +301,7 @@ public class Unit : MonoBehaviour
 public class UnitData
 {
     public int ID;
-    public int Lev;
+    public float PrepareTime;
     public string Name;
     public int Hp;
     public int Atk;
@@ -308,7 +320,7 @@ public class UnitData
     public UnitData()
     {
         ID = 0;
-        Lev = 0;
+        PrepareTime = 0;
         Name = "default";
         Hp = 10;
         Atk = 1;
@@ -328,7 +340,7 @@ public class UnitData
     public UnitData(UnitData data)
     {
         ID = data.ID;
-        Lev = data.Lev;
+        PrepareTime = data.PrepareTime;
         Name = data.Name;
         Hp = data.Hp;
         Atk = data.Atk;

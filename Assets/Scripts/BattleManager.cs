@@ -8,8 +8,10 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
 
-    public Group Íæ¼Ò;
-    public Group µÐÈË;
+    public Group playerGroup;
+    public Group EnemyGroup;
+    public Controller PlayerController;
+    public Controller EnemyController;
 
     public List<Unit> PlayerBuilding = new List<Unit>();
     public List<Unit> EnemyBuilding = new List<Unit>();
@@ -18,6 +20,7 @@ public class BattleManager : MonoBehaviour
     public GameObject prefabBullet;
     public GameObject prefabSoldier;
     public GameObject prefabBuilding;
+    public Material mareialPlayer, mareialEnemy,materialBoth,materialNeither;
 
     private void Awake()
     {
@@ -53,7 +56,10 @@ public class BattleManager : MonoBehaviour
 
     public void BattleInitiate()
     {
-
+        PlayerController.SetDeck(GameManager.instance.PlayerDeck);
+        EnemyController.SetDeck(GameManager.instance.EnemyDeck);
+        StartCoroutine(PlayerController.PrepareCard());
+        StartCoroutine(EnemyController.PrepareCard());
     }
 
     /// <summary>

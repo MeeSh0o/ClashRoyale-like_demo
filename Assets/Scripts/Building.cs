@@ -9,8 +9,9 @@ public class Building : Unit
         base.Awake();
     }
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         if(Fold == "Player")
         {
             BattleManager.instance.PlayerBuilding.Add(this);
