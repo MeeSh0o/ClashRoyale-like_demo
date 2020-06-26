@@ -74,13 +74,4 @@ public class BattleManager : MonoBehaviour
     {
 
     }
-    /// <summary>
-    /// 传入任意坐标，返回网格上的坐标
-    /// </summary>
-    /// <param name="vector"></param>
-    /// <returns></returns>
-    //public Vector3 SpawnPosition(Vector3 vector)
-    //{
-
-    //}
 }

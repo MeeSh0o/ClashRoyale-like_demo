@@ -121,6 +121,24 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 70c0d51dd91073f47a20e8ae47c928d8, type: 2}
+--- !u!1 &1038621466 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4928004839637195022, guid: a6669382265a2f7488bf8bd5b3620527,
+    type: 3}
+  m_PrefabInstance: {fileID: 2856229339950951435}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1038621468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038621466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b680edb40b58e044f83828df7edeb304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1159655772
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,6 +151,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1709629422}
+    - target: {fileID: 6188370334655613000, guid: 44a3b3eb452b5074dbbdae4ebb8b67ec,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7603668961803832065, guid: 44a3b3eb452b5074dbbdae4ebb8b67ec,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -502,6 +525,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4904791351242492635, guid: 309671e8e5ca19a49a160c09573ce589,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 24375
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 309671e8e5ca19a49a160c09573ce589, type: 3}
 --- !u!1001 &6022197761992234948
@@ -661,6 +689,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6450436540192090376, guid: f0d7f5a6e5e9bb6448404e0fb654d808,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450436540192090376, guid: f0d7f5a6e5e9bb6448404e0fb654d808,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.16
+      objectReference: {fileID: 0}
     - target: {fileID: 7759667705725686353, guid: f0d7f5a6e5e9bb6448404e0fb654d808,
         type: 3}
       propertyPath: playerGroup

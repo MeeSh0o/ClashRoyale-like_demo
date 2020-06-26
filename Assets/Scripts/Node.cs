@@ -66,11 +66,14 @@ public class Node : MonoBehaviour
 
     private void FlushBanned()
     {
+        bool isInBuilding = false;
+
         if (inPlayerBanner.Count > 0)
         {
             for (int i = inPlayerBanner.Count - 1; i >= 0; i--)
             {
                 if (inPlayerBanner[i] == null) inPlayerBanner.RemoveAt(i);
+                else if (Tools.Distance(inPlayerBanner[i].transform, transform) < 0.9f) isInBuilding = true;
             }
             isBanedByPlayer = inPlayerBanner.Count > 0 ? true : false;
         }
@@ -81,11 +84,17 @@ public class Node : MonoBehaviour
             for (int i = inEnemyBanner.Count - 1; i >= 0; i--)
             {
                 if (inEnemyBanner[i] == null) inEnemyBanner.RemoveAt(i);
+                else if (Tools.Distance(inEnemyBanner[i].transform, transform) < 0.9f) isInBuilding = true;
             }
             isBanedByEnemy = inEnemyBanner.Count > 0 ? true : false;
         }
         else isBanedByEnemy = false;
 
+        if (isInBuilding)
+        {
+            isBanedByEnemy = true;
+            isBanedByPlayer = true;
+        }
         if (!isBanedByEnemy && !isBanedByPlayer)
         {
             mr.material = BattleManager.instance.materialNeither;
@@ -102,5 +111,10 @@ public class Node : MonoBehaviour
         {
             mr.material = BattleManager.instance.mareialEnemy;
         }
+    }
+
+    public void SetVisible(bool vis)
+    {
+        gameObject.layer = vis ? 14 : 13;
     }
 }

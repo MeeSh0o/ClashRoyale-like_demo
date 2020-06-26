@@ -76,6 +76,16 @@ MonoBehaviour:
   HandCardUI: []
   HandCardText: []
   group: {fileID: 6917026281199459504}
+  isChosing: 0
+  chosenCard: -1
+  notSelect: {fileID: 0}
+  noeS: {fileID: 0}
+  mainCamera: {fileID: 0}
+  nodeshower: {fileID: 0}
+  rayHitMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  preLook: {fileID: 0}
 --- !u!1001 &3062726122968290773
 PrefabInstance:
   m_ObjectHideFlags: 0

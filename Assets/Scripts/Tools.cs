@@ -16,6 +16,13 @@ public static class Tools
         Vector3 sub = new Vector3(t1.position.x, 0, t1.position.z) - new Vector3(t2.position.x, 0, t2.position.z);
         return sub.magnitude;
     }
+    public static float Distance(Vector3 v1, Vector3 v2)
+    {
+        Vector3 sub = v1 - v2;
+        return sub.magnitude;
+    }
+
+
     /// <summary>
     /// 转换表格字符数据为int
     /// </summary>

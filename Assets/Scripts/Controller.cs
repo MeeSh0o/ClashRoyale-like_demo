@@ -41,11 +41,49 @@ public class Controller : MonoBehaviour
     /// <summary>
     /// 手牌UI
     /// </summary>
-    public List<GameObject> HandCardUI;
+    public List<Button> HandCardUI;
 
     public List<Text> HandCardText;
 
     public Group group;
+
+    /// <summary>
+    /// 当前是否选中牌
+    /// </summary>
+    public bool isChosing = false;
+    /// <summary>
+    /// 当前选中的牌
+    /// </summary>
+    public int chosenCard = -1;
+
+
+    public Button notSelect;
+
+    public virtual void Awake()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            HandCardUI.Add(GameObject.Find(Flod + "Deck" + (i + 1).ToString()).GetComponent<Button>());
+        }
+        for (int i = 0; i < HandCardUI.Count; i++)
+        {
+            HandCardText.Add(HandCardUI[i].GetComponentInChildren<Text>());
+            int j = i;
+            HandCardUI[i].GetComponent<Button>().onClick.AddListener(delegate () { this.CallACard(j); });// 给按钮挂监听脚本
+        }
+        HandDeck = new List<int>(new int[] { -1, -1, -1, -1 });
+        for (int i = 0; i < HandCardUI.Count - 1; i++)
+        {
+            UpdateCardUI(i);
+        }
+        if (notSelect == null)
+        {
+            notSelect = GameObject.Find("NotSelect").GetComponent<Button>();
+        }
+
+        PrepareUnit = -1;
+        group = GetComponent<Group>();
+    }
 
     /// <summary>
     /// 设置牌组
@@ -74,9 +112,9 @@ public class Controller : MonoBehaviour
     public virtual int DrawACard()
     {
         // 如果抽牌堆空，把弃牌堆洗入抽牌堆
-        if(DrawDeck.Count == 0)
+        if (DrawDeck.Count == 0)
         {
-            for(int i = 0; i < AbandonDeck.Count; i++)
+            for (int i = 0; i < AbandonDeck.Count; i++)
             {
                 int temp = AbandonDeck[i];
                 DrawDeck.Add(temp);
@@ -84,12 +122,12 @@ public class Controller : MonoBehaviour
             }
         }
 
-        if(DrawDeck.Count > 0)
+        if (DrawDeck.Count > 0)
         {
             int index = Random.Range(0, DrawDeck.Count);
             int id = DrawDeck[index];
             DrawDeck.Remove(id);
-            Debug.Log("玩家" + Flod + "抽到了牌: " + id.ToString());
+            Debug.Log("玩家" + Flod + "抽到了牌: " + id.ToString() + Tools.GetUnitData(id).Name);
             return id;
         }
         else
@@ -108,34 +146,16 @@ public class Controller : MonoBehaviour
     {
         if (HandDeck[i] == -1)
         {
-            HandCardUI[i].SetActive(false);
+            HandCardUI[i].gameObject.SetActive(false);
         }
         else
         {
-            HandCardUI[i].SetActive(true);
+            HandCardUI[i].gameObject.SetActive(true);
             HandCardText[i].text = Tools.GetUnitData(HandDeck[i]).Name + "\n" + (i + 1).ToString();
         }
     }
 
-    public virtual void Awake()
-    {
-        for(int i = 0; i < 5; i++)
-        {
-            HandCardUI.Add(GameObject.Find(Flod + "Deck" + (i + 1).ToString()));
-        }
-        for (int i = 0; i < HandCardUI.Count; i++)
-        {
-            HandCardText.Add(HandCardUI[i].GetComponentInChildren<Text>());
-        }
-        HandDeck = new List<int>(new int[]{-1,-1,-1,-1});
-        for (int i = 0; i < HandCardUI.Count - 1; i++)
-        {
-            UpdateCardUI(i);
-        }
-        PrepareUnit = -1;
 
-        group = GetComponent<Group>();
-    }
 
     /// <summary>
     /// 发牌器
@@ -163,13 +183,13 @@ public class Controller : MonoBehaviour
                 yield return 0;
             }
             // 计时充足，把卡填充到手牌，准备区重置
-            if(prepareTime >= PrepareTime)
+            if (prepareTime >= PrepareTime)
             {
                 HandCardText[HandCardText.Count - 1].text = name + "\n" + "100%";
-                for(int i = 0; i < HandDeck.Count; i++)
+                for (int i = 0; i < HandDeck.Count; i++)
                 {
                     // 找到第一张空牌,就把这张准备好的牌发过去
-                    if(HandDeck[i] == -1)
+                    if (HandDeck[i] == -1)
                     {
                         HandDeck[i] = PrepareUnit;
                         PrepareUnit = -1;
@@ -190,24 +210,90 @@ public class Controller : MonoBehaviour
     /// <param name="position"></param>
     public void UseCard(int i, Vector3 position)
     {
+        Debug.Log("玩家" + Flod + "使用牌 " + (i + 1).ToString() + " " + Tools.GetUnitData(HandDeck[i]).Name);
+
         int id = HandDeck[i];
 
         group.SpawnUnit(id, position);
+
+        isChosing = false;
+        chosenCard = -1;
+
+        AbandonDeck.Add(id);
 
         HandDeck[i] = -1;
         UpdateCardUI(i);
     }
 
-
-
     /// <summary>
-    /// 判断坐标是否合法,并返回一个合法值
+    /// 选中卡片
     /// </summary>
-    /// <param name="vector3"></param>
-    public virtual Vector3 ISPositionAllowed(Vector3 vector3)
+    /// <param name="i"></param>
+    /// <returns></returns>
+    public bool CallACard(int i)
     {
-        Ray ray = Camera.main.ScreenPointToRay(vector3);//从摄像机发出到点击坐标的射线
+        if (!isChosing)
+        {
+            // 当前没有在选牌
+            Debug.Log("玩家" + Flod + "尝试选中牌" + (i+1).ToString());
 
-        return Vector3.zero;
+            if (HandDeck[i] != -1)
+            {
+                Debug.Log("玩家" + Flod + "尝试选中牌" + (i + 1).ToString() + "成功");
+                ChoseACard(i);
+                return true;
+            }
+        }
+        else
+        {
+            // 已经选了牌
+            if (i == chosenCard)
+            {
+                // 选中相同牌,则为取消选牌
+                CancelCallACard();
+                return false;
+            }
+            else
+            {
+                // 选中不同牌
+                Debug.Log("玩家" + Flod + "将牌从 " + (chosenCard + 1).ToString() + " 更换到 " + (i + 1).ToString());
+
+                if (HandDeck[i] != -1)
+                {
+                    Debug.Log("玩家" + Flod + "将牌从 " + (chosenCard + 1).ToString() + " 更换到 " + (i + 1).ToString() + "成功");
+                    ChoseACard(i);
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
+    /// <summary>
+    /// 选中卡牌
+    /// </summary>
+    /// <param name="i"></param>
+    public virtual void ChoseACard(int i)
+    {
+        isChosing = true;
+        chosenCard = i;
+        if (Flod == "Player")
+        {
+            HandCardUI[chosenCard].Select(); 
+        }       
+    }
+    /// <summary>
+    /// 取消选中卡片
+    /// </summary>
+    public virtual void CancelCallACard()
+    {
+        Debug.Log("玩家" + Flod + "取消选中牌 " + (chosenCard + 1).ToString());
+        isChosing = false;
+        chosenCard = -1;
+        if(Flod == "Player")
+        {
+            notSelect.Select();
+        }
+    }
+
 }

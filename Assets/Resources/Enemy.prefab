@@ -76,6 +76,10 @@ MonoBehaviour:
   HandCardUI: []
   HandCardText: []
   group: {fileID: 9191450859935176571}
+  isChosing: 0
+  chosenCard: -1
+  notSelect: {fileID: 0}
+  noeS: {fileID: 0}
 --- !u!1001 &788231314940616222
 PrefabInstance:
   m_ObjectHideFlags: 0
