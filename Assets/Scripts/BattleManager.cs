@@ -23,7 +23,9 @@ public class BattleManager : MonoBehaviour
     public GameObject prefabBullet;
     public GameObject prefabSoldier;
     public GameObject prefabBuilding;
-    public Material materialPlayer, materialEnemy,materialBoth,materialNeither;
+    //public Material materialPlayer, materialEnemy,materialBoth,materialNeither;
+
+    
 
     private void Awake()
     {
@@ -53,10 +55,10 @@ public class BattleManager : MonoBehaviour
         {
             EnemyController = Enemy.GetComponent<Controller>();
         }
-        materialBoth = Resources.Load("Materials/Both") as Material;
-        materialEnemy = Resources.Load("Materials/Enemy") as Material;
-        materialPlayer = Resources.Load("Materials/Player") as Material;
-        materialNeither = Resources.Load("Materials/Neither") as Material;
+        //materialBoth = Resources.Load("Materials/Both") as Material;
+        //materialEnemy = Resources.Load("Materials/Enemy") as Material;
+        //materialPlayer = Resources.Load("Materials/Player") as Material;
+        //materialNeither = Resources.Load("Materials/Neither") as Material;
 
         prefabBullet = Resources.Load("Bullet") as GameObject;
         prefabSoldier = Resources.Load("Soldier") as GameObject;
@@ -100,9 +102,9 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(EnemyController.PrepareCard());
     }
 
-    public void Lose(string flod)
+    public void Lose(string fold)
     {
-        switch (flod)
+        switch (fold)
         {
             case "Player":
                 PlayerWin();

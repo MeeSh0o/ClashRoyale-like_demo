@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Childs: []
-  Flod: Player
+  Fold: Player
   Buildings: []
   Soldiers: []
   Base: {fileID: 8600402488260526886}
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19d02f073632d242a516cbb4edc3b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Flod: Player
+  Fold: Player
   Deck: 
   DrawDeck: 
   AbandonDeck: 
@@ -79,12 +79,12 @@ MonoBehaviour:
   isChosing: 0
   chosenCard: -1
   notSelect: {fileID: 0}
+  preLook: {fileID: 0}
   mainCamera: {fileID: 0}
   nodeshower: {fileID: 0}
   rayHitMask:
     serializedVersion: 2
     m_Bits: 4096
-  preLook: {fileID: 0}
 --- !u!1001 &3062726122968290773
 PrefabInstance:
   m_ObjectHideFlags: 0

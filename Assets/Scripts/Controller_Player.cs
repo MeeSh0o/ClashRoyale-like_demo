@@ -16,11 +16,11 @@ public class Controller_Player : Controller
         base.Awake();
         if (nodeshower == null)
         {
-            nodeshower = Instantiate(Resources.Load("NodeShower") as GameObject, transform);
+            nodeshower = Instantiate(Resources.Load("Battle/NodeShower") as GameObject, transform);
         }
         if(preLook == null)
         {
-            preLook = Instantiate(Resources.Load("PreLook" + Flod) as GameObject, transform);
+            preLook = Instantiate(Resources.Load("Battle/PreLook" + Fold) as GameObject, transform);
         }
 
         for(int i = 0;i<HandCardUI.Count - 1; i++)
@@ -80,7 +80,7 @@ public class Controller_Player : Controller
             }
 
             // 在合法坐标创建一个预览模型
-            Node nearestNode = NodeManager.instance.GetNearestNode(hit.point, Flod == "Player",6);
+            Node nearestNode = NodeManager.instance.GetNearestNode(hit.point, Fold == "Player",6);
             if (nearestNode != null)
             {
                 // 鼠标位置合法

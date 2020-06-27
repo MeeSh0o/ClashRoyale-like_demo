@@ -10,12 +10,20 @@ public class DataLoader : MonoBehaviour
 {
     public static DataLoader instance;
 
+    public List<List<string>> modelData;
+
+    public Dictionary<int, GameObject> modelPrefabDictionary = new Dictionary<int, GameObject>();
+
+    public Dictionary<string, Material> materialDictionary = new Dictionary<string, Material>();
+
     string value;
     //string all;
 
     private void Awake()
     {
         instance = this;
+
+        modelData = LoadData("UnitModel.xlsx");
     }
 
     /// <summary>
@@ -118,6 +126,64 @@ public class DataLoader : MonoBehaviour
             //保存excel
             package.Save();
             print("重写完成");
+        }
+    }
+
+    /// <summary>
+    /// 获取对应ID的mpdelPrefab
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public GameObject GetModelPrefab(int id)
+    {
+        if (modelPrefabDictionary.ContainsKey(id))
+        {
+            return modelPrefabDictionary[id];
+        }
+        else
+        {
+            GameObject temp = Resources.Load(GetModelPath(id)) as GameObject;
+            modelPrefabDictionary.Add(id, temp);
+            return temp;
+        
+        }
+    }
+    
+    private string GetModelPath(int id)
+    {
+        int dataIndex = -1;
+        for (int i = 0; i < modelData.Count; i++)
+        {
+            if (Tools.String2Int(modelData[i][0]).Equals(id))
+            {
+                dataIndex = i;
+                break;
+            }
+        }
+        if (dataIndex != -1)
+        {
+            return modelData[dataIndex][1];
+        }
+        else return "UnitModel/Default";
+    }
+
+    /// <summary>
+    /// 获取材质
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public Material GetMaterial(string name)
+    {
+        if (materialDictionary.ContainsKey(name))
+        {
+            return materialDictionary[name];
+        }
+        else
+        {
+            Material temp = Resources.Load("Materials/" + name) as Material;
+            materialDictionary.Add(name, temp);
+            return temp;
+
         }
     }
 }

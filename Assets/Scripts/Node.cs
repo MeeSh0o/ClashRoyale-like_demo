@@ -97,19 +97,19 @@ public class Node : MonoBehaviour
         }
         if (!isBanedByEnemy && !isBanedByPlayer)
         {
-            mr.material = BattleManager.instance.materialNeither;
+            mr.material = DataLoader.instance.GetMaterial("Neither");
         }
         else if (isBanedByEnemy && isBanedByPlayer)
         {
-            mr.material = BattleManager.instance.materialBoth;
+            mr.material = DataLoader.instance.GetMaterial("Both");
         }
         else if (isBanedByPlayer)
         {
-            mr.material = BattleManager.instance.materialPlayer;
+            mr.material = DataLoader.instance.GetMaterial("Player");
         }
         else if (isBanedByEnemy)
         {
-            mr.material = BattleManager.instance.materialEnemy;
+            mr.material = DataLoader.instance.GetMaterial("Enemy");
         }
     }
 

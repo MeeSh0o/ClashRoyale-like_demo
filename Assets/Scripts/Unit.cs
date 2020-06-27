@@ -20,12 +20,13 @@ public class Unit : MonoBehaviour
     /// </summary>
     public UnitData data;
     public int id;
-
+    private bool initiated = false;
     /// <summary>
     /// 状态
     /// </summary>
     public UnitState state;
 
+    
     /// <summary>
     /// 当前仇恨对象
     /// </summary>
@@ -93,9 +94,30 @@ public class Unit : MonoBehaviour
 
     public virtual void Start()
     {
-        SetData();
+        if (!initiated) Initiate(id);
         HpBarManager.instance.CallABar(this);
     }
+
+    public virtual void Initiate(int id)
+    {
+        data = Tools.GetUnitData(id);
+        this.id = id;
+        Hp = data.Hp;
+        gameObject.name = data.Name;
+        GameObject model = Instantiate(DataLoader.instance.GetModelPrefab(id), this.model.transform);
+        model.name = "模型";
+        attackTrigger.GetComponent<SphereCollider>().radius = data.ScanRange;
+        
+
+        for (int i = 0; i < model.transform.childCount; i++)
+        {
+            MeshRenderer meshR = model.transform.GetChild(i).GetComponent<MeshRenderer>();
+            if(meshR) meshR.material = DataLoader.instance.GetMaterial(Fold);
+        }
+
+        initiated = true;
+    }
+
 
     public enum UnitState
     {
@@ -298,12 +320,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public virtual void SetData()
-    {
-        data = Tools.GetUnitData(id);
-        Hp = data.Hp;
-        gameObject.name = data.Name;
-    }
+
 }
 
 /// <summary>
@@ -317,9 +334,9 @@ public class UnitData
     public int Hp;
     public int Atk;
     public int Number;
-    public float Size;
+    public int Model;
     public float Speed;
-    public float Height;
+    public float ProxyRadius;
     public int Priority;
     public float HitRange;
     public float ScanRange;
@@ -336,9 +353,9 @@ public class UnitData
         Hp = 10;
         Atk = 1;
         Number = 1;
-        Size = 1;
+        Model = 0;
         Speed = 0;
-        Height = 0;
+        ProxyRadius = 0;
         Priority = 50;
         HitRange = 6f;
         ScanRange = 1000;
@@ -356,9 +373,9 @@ public class UnitData
         Hp = data.Hp;
         Atk = data.Atk;
         Number = data.Number;
-        Size = data.Size;
+        Model = data.Model;
         Speed = data.Speed;
-        Height = data.Height;
+        ProxyRadius = data.ProxyRadius;
         Priority = data.Priority;
         HitRange = data.HitRange;
         ScanRange = data.ScanRange;

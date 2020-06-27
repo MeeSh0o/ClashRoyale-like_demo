@@ -150,7 +150,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1709629422}
+      objectReference: {fileID: 0}
     - target: {fileID: 6188370334655613000, guid: 44a3b3eb452b5074dbbdae4ebb8b67ec,
         type: 3}
       propertyPath: m_Enabled
@@ -296,7 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19d02f073632d242a516cbb4edc3b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Flod: Enemy
+  Fold: Enemy
   Deck: 
   DrawDeck: 
   AbandonDeck: 
@@ -310,30 +310,18 @@ MonoBehaviour:
   isChosing: 0
   chosenCard: -1
   notSelect: {fileID: 0}
+  preLook: {fileID: 0}
   mainCamera: {fileID: 0}
   nodeshower: {fileID: 0}
   rayHitMask:
     serializedVersion: 2
     m_Bits: 4096
-  preLook: {fileID: 0}
 --- !u!108 &1510536325 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 6022197763435651905, guid: ef7946186f096ae4090839652bb8dfbd,
     type: 3}
   m_PrefabInstance: {fileID: 6022197761992234948}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1709629422 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7759667705725686353, guid: f0d7f5a6e5e9bb6448404e0fb654d808,
-    type: 3}
-  m_PrefabInstance: {fileID: 7759667704221293342}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bcce0da4f69fff419296a5ff54e6ef9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1882811275 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6917026281199459504, guid: b47c20287f0d3974fb2be02b484bcfd6,
@@ -666,6 +654,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2330190185551404666, guid: b47c20287f0d3974fb2be02b484bcfd6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2330190185551404668, guid: b47c20287f0d3974fb2be02b484bcfd6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.15
+      objectReference: {fileID: 0}
     - target: {fileID: 6917026281199459505, guid: b47c20287f0d3974fb2be02b484bcfd6,
         type: 3}
       propertyPath: m_LocalPosition.x

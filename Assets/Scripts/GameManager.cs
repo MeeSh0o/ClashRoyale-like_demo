@@ -28,9 +28,9 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        LoadData();
+        unitData = DataLoader.instance.LoadData("Unit.xlsx");
 
-        if(battleManager == null)
+        if (battleManager == null)
         battleManager = Resources.Load("BattleManager") as GameObject;
 
         if (SceneManager.GetActiveScene().buildIndex != 0) inBattleScene = true;
@@ -43,11 +43,6 @@ public class GameManager : MonoBehaviour
         {
             OnEnterMenuScene();
         }
-    }
-
-    public void LoadData()
-    {
-        unitData = DataLoader.instance.LoadData("Unit.xlsx");
     }
 
     public void OnEnterBattleScene()

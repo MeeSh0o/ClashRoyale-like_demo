@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Controller : MonoBehaviour
 {
-    public string Flod;
+    public string Fold = "Player";
     /// <summary>
     /// 卡组
     /// </summary>
@@ -64,7 +64,7 @@ public class Controller : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-            HandCardUI.Add(GameObject.Find(Flod + "Deck" + (i + 1).ToString()).GetComponent<Button>());
+            HandCardUI.Add(GameObject.Find(Fold + "Deck" + (i + 1).ToString()).GetComponent<Button>());
         }
         for (int i = 0; i < HandCardUI.Count; i++)
         {
@@ -133,12 +133,12 @@ public class Controller : MonoBehaviour
             int index = Random.Range(0, DrawDeck.Count);
             int id = DrawDeck[index];
             DrawDeck.Remove(id);
-            Debug.Log("玩家" + Flod + "抽到了牌: " + id.ToString() + Tools.GetUnitData(id).Name);
+            Debug.Log("玩家" + Fold + "抽到了牌: " + id.ToString() + Tools.GetUnitData(id).Name);
             return id;
         }
         else
         {
-            Debug.Log("玩家" + Flod + "没抽到牌:");
+            Debug.Log("玩家" + Fold + "没抽到牌:");
             return -1;
         }
 
@@ -217,7 +217,7 @@ public class Controller : MonoBehaviour
     /// <param name="position"></param>
     public void UseCard(int i, Vector3 position)
     {
-        Debug.Log("玩家" + Flod + "使用牌 " + (i + 1).ToString() + " " + Tools.GetUnitData(HandDeck[i]).Name);
+        Debug.Log("玩家" + Fold + "使用牌 " + (i + 1).ToString() + " " + Tools.GetUnitData(HandDeck[i]).Name);
 
         int id = HandDeck[i];
 
@@ -242,11 +242,11 @@ public class Controller : MonoBehaviour
         if (!isChosing)
         {
             // 当前没有在选牌
-            Debug.Log("玩家" + Flod + "尝试选中牌" + (i+1).ToString());
+            Debug.Log("玩家" + Fold + "尝试选中牌" + (i+1).ToString());
 
             if (HandDeck[i] != -1)
             {
-                Debug.Log("玩家" + Flod + "尝试选中牌" + (i + 1).ToString() + "成功");
+                Debug.Log("玩家" + Fold + "尝试选中牌" + (i + 1).ToString() + "成功");
                 ChoseACard(i);
                 return true;
             }
@@ -263,11 +263,11 @@ public class Controller : MonoBehaviour
             else
             {
                 // 选中不同牌
-                Debug.Log("玩家" + Flod + "将牌从 " + (chosenCard + 1).ToString() + " 更换到 " + (i + 1).ToString());
+                Debug.Log("玩家" + Fold + "将牌从 " + (chosenCard + 1).ToString() + " 更换到 " + (i + 1).ToString());
 
                 if (HandDeck[i] != -1)
                 {
-                    Debug.Log("玩家" + Flod + "将牌从 " + (chosenCard + 1).ToString() + " 更换到 " + (i + 1).ToString() + "成功");
+                    Debug.Log("玩家" + Fold + "将牌从 " + (chosenCard + 1).ToString() + " 更换到 " + (i + 1).ToString() + "成功");
                     ChoseACard(i);
                     return true;
                 }
@@ -284,7 +284,7 @@ public class Controller : MonoBehaviour
     {
         isChosing = true;
         chosenCard = i;
-        if (Flod == "Player")
+        if (Fold == "Player")
         {
             HandCardUI[chosenCard].Select(); 
         }       
@@ -294,10 +294,10 @@ public class Controller : MonoBehaviour
     /// </summary>
     public virtual void CancelCallACard()
     {
-        Debug.Log("玩家" + Flod + "取消选中牌 " + (chosenCard + 1).ToString());
+        Debug.Log("玩家" + Fold + "取消选中牌 " + (chosenCard + 1).ToString());
         isChosing = false;
         chosenCard = -1;
-        if(Flod == "Player")
+        if(Fold == "Player")
         {
             notSelect.Select();
         }

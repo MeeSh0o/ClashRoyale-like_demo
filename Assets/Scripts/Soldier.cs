@@ -30,7 +30,13 @@ public class Soldier : Unit
             group.Childs.Add(this);
         }
     }
-
+    public override void Initiate(int id)
+    {
+        base.Initiate(id);
+        agent.speed = data.Speed;
+        agent.radius = data.ProxyRadius;
+        agent.avoidancePriority = data.Priority;
+    }
     public override void Update()
     {
         base.Update();

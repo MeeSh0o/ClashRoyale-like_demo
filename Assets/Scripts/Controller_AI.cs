@@ -50,14 +50,14 @@ public class Controller_AI : Controller
         {
             judgeTime = Mathf.PI * 1.5f;
         }
-        preLook = Resources.Load("PreLook" + Flod) as GameObject;
+        preLook = Resources.Load("Battle/PreLook" + Fold) as GameObject;
     }
 
     private void Start()
     {
         if (enemyGroup == null)
         {
-            enemyGroup = Flod == "Player" ? BattleManager.instance.EnemyGroup : BattleManager.instance.playerGroup;
+            enemyGroup = Fold == "Player" ? BattleManager.instance.EnemyGroup : BattleManager.instance.playerGroup;
         }
     }
 
@@ -217,14 +217,14 @@ public class Controller_AI : Controller
                     if (temp > agg)
                     {
                         // 防守 
-                        Node nearestNode = NodeManager.instance.GetNearestNode(mostHittedUnitM.transform.position + positionOffset, Flod == "Player", 100f);
+                        Node nearestNode = NodeManager.instance.GetNearestNode(mostHittedUnitM.transform.position + positionOffset, Fold == "Player", 100f);
                         //Debug.LogWarning(nearestNode.transform.position);
                         StartCoroutine(AIUseCard(i, nearestNode.transform.position));
                     }
                     else
                     {
                         // 攻击
-                        Node nearestNode = NodeManager.instance.GetNearestNode(mostHittedUnitE.transform.position + positionOffset, Flod == "Player", 100f);
+                        Node nearestNode = NodeManager.instance.GetNearestNode(mostHittedUnitE.transform.position + positionOffset, Fold == "Player", 100f);
                         //Debug.LogWarning(nearestNode.transform.position);
                         StartCoroutine(AIUseCard(i, nearestNode.transform.position));
                     }
