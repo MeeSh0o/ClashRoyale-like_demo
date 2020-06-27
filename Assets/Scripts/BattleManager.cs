@@ -8,6 +8,8 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
 
+    public GameObject Player, Enemy;
+
     public Group playerGroup;
     public Group EnemyGroup;
     public Controller PlayerController;
@@ -20,11 +22,33 @@ public class BattleManager : MonoBehaviour
     public GameObject prefabBullet;
     public GameObject prefabSoldier;
     public GameObject prefabBuilding;
-    public Material mareialPlayer, mareialEnemy,materialBoth,materialNeither;
+    public Material materialPlayer, materialEnemy,materialBoth,materialNeither;
 
     private void Awake()
     {
         instance = this;
+        Player = GameObject.Find("Player");
+        Enemy = GameObject.Find("Enemy");
+        if(playerGroup == null)
+        {
+            playerGroup = Player.GetComponent<Group>();
+        }
+        if (EnemyGroup == null)
+        {
+            EnemyGroup = Enemy.GetComponent<Group>();
+        }
+        if (PlayerController == null)
+        {
+            PlayerController = Player.GetComponent<Controller>();
+        }
+        if (EnemyController == null)
+        {
+            EnemyController = Enemy.GetComponent<Controller>();
+        }
+        materialBoth = Resources.Load("Materials/Both") as Material;
+        materialEnemy = Resources.Load("Materials/Enemy") as Material;
+        materialPlayer = Resources.Load("Materials/Player") as Material;
+        materialNeither = Resources.Load("Materials/Neither") as Material;
     }
 
     public Vector3 GetRandomLocation()

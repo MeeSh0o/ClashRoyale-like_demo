@@ -34,6 +34,7 @@ public class Group : MonoBehaviour
             unit.Fold = Flod;
             unit.id = id;
             Childs.Add(unit);
+            unit.model.GetComponent<MeshRenderer>().material = Flod == "Player" ? BattleManager.instance.materialPlayer : BattleManager.instance.materialEnemy;
         }
         
     }
@@ -80,10 +81,10 @@ public class Group : MonoBehaviour
     public  IEnumerator SpawnTest1()
     {
         yield return new WaitForSeconds(1);
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 1000; i++)
         {
             SpawnTest();
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(4);
         }
     }
 

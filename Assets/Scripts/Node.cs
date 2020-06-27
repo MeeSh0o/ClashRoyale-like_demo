@@ -105,11 +105,11 @@ public class Node : MonoBehaviour
         }
         else if (isBanedByPlayer)
         {
-            mr.material = BattleManager.instance.mareialPlayer;
+            mr.material = BattleManager.instance.materialPlayer;
         }
         else if (isBanedByEnemy)
         {
-            mr.material = BattleManager.instance.mareialEnemy;
+            mr.material = BattleManager.instance.materialEnemy;
         }
     }
 

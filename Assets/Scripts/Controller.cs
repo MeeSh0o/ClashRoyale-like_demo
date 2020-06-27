@@ -82,7 +82,12 @@ public class Controller : MonoBehaviour
         }
 
         PrepareUnit = -1;
-        group = GetComponent<Group>();
+
+        if(group == null)
+        {
+            group = GetComponent<Group>();
+        }
+        
     }
 
     /// <summary>
@@ -163,6 +168,7 @@ public class Controller : MonoBehaviour
     /// <returns></returns>
     public IEnumerator PrepareCard()
     {
+        EnableAI();
         // 无限循环的抽牌
         string name = "";
         while (true)
@@ -295,5 +301,18 @@ public class Controller : MonoBehaviour
             notSelect.Select();
         }
     }
+    /// <summary>
+    /// 开启AI功能
+    /// </summary>
+    public virtual void EnableAI()
+    {
 
+    }
+    /// <summary>
+    /// 关闭AI功能
+    /// </summary>
+    public virtual void DisableAI()
+    {
+
+    }
 }

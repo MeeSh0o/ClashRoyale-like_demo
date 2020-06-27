@@ -43,7 +43,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.20983982, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -213,7 +213,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2991987677122176185}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e4eb0326f7b17cd4aacfcf9e464f4c08, type: 2}
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
@@ -237,6 +237,8 @@ MonoBehaviour:
   damage: 1
   rb: {fileID: 2991987677122176165}
   offset: {x: 0, y: 0, z: 0}
+  light: {fileID: 0}
+  LifeTime: 100
 --- !u!54 &2991987677122176165
 Rigidbody:
   m_ObjectHideFlags: 0

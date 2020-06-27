@@ -9,7 +9,12 @@ public class Bullet : MonoBehaviour
     public int damage;
     public Rigidbody rb;
     public Vector3 offset;
+    public Light light;
 
+    public float LifeTime = 100;
+    private float lifeTime = 0;
+    private bool useful = true;
+    private float lightIntensity;
 
     /// <summary>
     /// 阵营
@@ -24,6 +29,12 @@ public class Bullet : MonoBehaviour
         {
             gameObject.tag = value;
         }
+    }
+
+    private void Awake()
+    {
+        //light.GetComponentInChildren<Light>();
+        //lightIntensity = light.intensity;
     }
     private void Update()
     {
@@ -50,25 +61,31 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (!collision.gameObject.CompareTag(Fold))
-    //    {
-    //        Unit enemy = collision.transform.parent.GetComponent<Unit>();
-    //        enemy.Hit(damage);
-    //        Destroy(gameObject);
-    //    }
-    //}
+        //if (lifeTime > 10 && LifeTime >lifeTime)
+        //{
+        //    light.intensity = Mathf.Lerp(lightIntensity, 0, lifeTime / LifeTime);
+        //}
+
+        lifeTime += Time.deltaTime;
+        if(lifeTime>LifeTime) Destroy(gameObject);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag(Fold))
+        if (!other.gameObject.CompareTag("Map"))
         {
-            Unit enemy = other.transform.parent.GetComponent<Unit>();
-            enemy.Hit(damage);
-            Destroy(gameObject);
+            if (!other.gameObject.CompareTag(Fold))
+            {
+                Unit enemy = other.transform.parent.GetComponent<Unit>();
+                enemy.Hit(damage);
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            Target = null;
+            GetComponent<Collider>().isTrigger = false;
         }
     }
 
@@ -88,6 +105,8 @@ public class Bullet : MonoBehaviour
         Vector2 velocityXZ = disXZ.normalized * speed;
 
         rb.velocity = new Vector3(velocityXZ.x, velocityY, velocityXZ.y);
+
+        useful = true;
     }
 
     //public void OnEnable()

@@ -23,6 +23,14 @@ public class Controller_Player : Controller
         {
             preLook = Instantiate(Resources.Load("PreLook") as GameObject, transform);
         }
+
+        for(int i = 0;i<HandCardUI.Count - 1; i++)
+        {
+            HandCardUI[i].interactable = true;
+            HandCardText[i].color = Color.black;
+        }
+
+        rayHitMask = 4096;
     }
 
     private void Start()
@@ -33,8 +41,6 @@ public class Controller_Player : Controller
     private void Update()
     {
         int callCard = -1;
-        bool leftClicked = false;
-        bool rightClicked = false;
         // 获取到按键输入
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
@@ -75,7 +81,7 @@ public class Controller_Player : Controller
             }
 
             // 在合法坐标创建一个预览模型
-            Node nearestNode = NodeManager.instance.GetNearestNode(hit.point, true);
+            Node nearestNode = NodeManager.instance.GetNearestNode(hit.point, Flod == "Player");
             if (nearestNode != null)
             {
                 // 鼠标位置合法
@@ -102,13 +108,8 @@ public class Controller_Player : Controller
             }
             else preLook.transform.position = Vector3.up * 100;
 
-
-
-
-
             if (Input.GetMouseButtonUp(1))
             {
-                rightClicked = true;
                 CancelCallACard();
             }
         }

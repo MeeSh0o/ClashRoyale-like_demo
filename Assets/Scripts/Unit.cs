@@ -142,10 +142,10 @@ public class Unit : MonoBehaviour
                     if (attackTime >= data.AttackTime)
                     {
                         attackTime = 0;
-                        Bullet bullet = Instantiate(BattleManager.instance.prefabBullet, bulletSpawner.position, Quaternion.identity, GameManager.instance.transform).GetComponent<Bullet>();
-
+                        
                         for (int i = 0; i < data.ShootNum; i++)
                         {
+                            Bullet bullet = Instantiate(BattleManager.instance.prefabBullet, bulletSpawner.position, Quaternion.identity, GameManager.instance.transform).GetComponent<Bullet>();
                             Vector3 offset = Random.Range(0, data.AttackOffset) * new Vector3(Random.value, 0, Random.value).normalized;
                             bullet.SetBullet(Target.model.gameObject, Fold, data.Atk, data.BulletSpeed, offset);
                         }
