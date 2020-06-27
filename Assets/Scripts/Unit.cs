@@ -104,10 +104,12 @@ public class Unit : MonoBehaviour
         this.id = id;
         Hp = data.Hp;
         gameObject.name = data.Name;
-        GameObject model = Instantiate(DataLoader.instance.GetModelPrefab(id), this.model.transform);
+        GameObject model = Instantiate(DataLoader.instance.GetModelPrefab(data.Model), this.model.transform);
         model.name = "模型";
         attackTrigger.GetComponent<SphereCollider>().radius = data.ScanRange;
-        
+
+        if (bulletSpawner == null)
+            bulletSpawner = transform.Find("BulletSpawner");
 
         for (int i = 0; i < model.transform.childCount; i++)
         {

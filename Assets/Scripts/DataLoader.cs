@@ -130,31 +130,30 @@ public class DataLoader : MonoBehaviour
     }
 
     /// <summary>
-    /// 获取对应ID的mpdelPrefab
+    /// 获取对应ModelID的mpdelPrefab
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="modelId"></param>
     /// <returns></returns>
-    public GameObject GetModelPrefab(int id)
+    public GameObject GetModelPrefab(int modelId)
     {
-        if (modelPrefabDictionary.ContainsKey(id))
+        if (modelPrefabDictionary.ContainsKey(modelId))
         {
-            return modelPrefabDictionary[id];
+            return modelPrefabDictionary[modelId];
         }
         else
         {
-            GameObject temp = Resources.Load(GetModelPath(id)) as GameObject;
-            modelPrefabDictionary.Add(id, temp);
-            return temp;
-        
+            GameObject temp = Resources.Load(GetModelPath(modelId)) as GameObject;
+            modelPrefabDictionary.Add(modelId, temp);
+            return temp;     
         }
     }
     
-    private string GetModelPath(int id)
+    private string GetModelPath(int modelId)
     {
         int dataIndex = -1;
         for (int i = 0; i < modelData.Count; i++)
         {
-            if (Tools.String2Int(modelData[i][0]).Equals(id))
+            if (Tools.String2Int(modelData[i][0]).Equals(modelId))
             {
                 dataIndex = i;
                 break;
