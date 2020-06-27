@@ -105,4 +105,19 @@ public class BattleManager : MonoBehaviour
     {
 
     }
+
+    public void Lose(string flod)
+    {
+        switch (flod)
+        {
+            case "Player":
+                PlayerWin();
+                break;
+            case "Enemy":
+                PlayerLose();
+                break;
+            default:
+                break;
+        }
+    }
 }

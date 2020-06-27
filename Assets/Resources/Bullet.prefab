@@ -44,7 +44,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0.20983982, b: 0, a: 1}
   m_Intensity: 1.2
-  m_Range: 10
+  m_Range: 4
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -237,8 +237,7 @@ MonoBehaviour:
   damage: 1
   rb: {fileID: 2991987677122176165}
   offset: {x: 0, y: 0, z: 0}
-  light: {fileID: 0}
-  LifeTime: 100
+  LifeTime: 20
 --- !u!54 &2991987677122176165
 Rigidbody:
   m_ObjectHideFlags: 0

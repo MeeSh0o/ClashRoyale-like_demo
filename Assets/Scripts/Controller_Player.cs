@@ -10,7 +10,6 @@ public class Controller_Player : Controller
     public Camera mainCamera;
     public GameObject nodeshower;
     public LayerMask rayHitMask;
-    public GameObject preLook;
 
     public override void Awake()
     {
@@ -21,7 +20,7 @@ public class Controller_Player : Controller
         }
         if(preLook == null)
         {
-            preLook = Instantiate(Resources.Load("PreLook") as GameObject, transform);
+            preLook = Instantiate(Resources.Load("PreLook" + Flod) as GameObject, transform);
         }
 
         for(int i = 0;i<HandCardUI.Count - 1; i++)
@@ -92,6 +91,7 @@ public class Controller_Player : Controller
                 {
                     if (EventSystem.current.IsPointerOverGameObject())
                     {
+                        Debug.LogWarning("正在点击UI");
                         // 点击UI
                     }
                     else

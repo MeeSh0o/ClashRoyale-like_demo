@@ -58,6 +58,7 @@ public class Controller : MonoBehaviour
 
 
     public Button notSelect;
+    public GameObject preLook;
 
     public virtual void Awake()
     {

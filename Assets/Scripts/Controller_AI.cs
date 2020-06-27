@@ -16,7 +16,7 @@ public class Controller_AI : Controller
     public float[] K = new float[6] { 1, 1, 0, 1, 1, 0 };
     public float[] L = new float[6] { 1, 1, 0, 1, 1, 0 };
 
-    [Range(-1,1)]
+    [Range(-1, 1)]
     public float strageLimit; // 屯兵极限，低于这个极限电脑不再屯兵，有兵就放
 
     /// <summary>
@@ -46,10 +46,11 @@ public class Controller_AI : Controller
             HandCardUI[i].interactable = false;
             HandCardText[i].color = Color.white;
         }
-        if(judgeTime == 0)
+        if (judgeTime == 0)
         {
-            judgeTime = Mathf.PI *1.5f;
+            judgeTime = Mathf.PI * 1.5f;
         }
+        preLook = Resources.Load("PreLook" + Flod) as GameObject;
     }
 
     private void Start()
@@ -108,7 +109,7 @@ public class Controller_AI : Controller
     {
         base.DisableAI();
 
-        if(ai != null)
+        if (ai != null)
         {
             StopCoroutine(ai);
             ai = null;
@@ -117,6 +118,7 @@ public class Controller_AI : Controller
 
     public IEnumerator AI()
     {
+        yield return new WaitForSeconds(judgeTime);
         while (true)
         {
             //Debug.Log(Flod + "Aggressive " + Aggressive());
@@ -129,12 +131,12 @@ public class Controller_AI : Controller
             if (handDeckNum == HandDeck.Count)
             {
                 // 手牌满了，一次性放光
-                for(int i = 0; i < HandDeck.Count; i++)
+                for (int i = 0; i < HandDeck.Count; i++)
                 {
                     usingCard.Add(i);
                 }
             }
-            else if(handDeckNum > 0)
+            else if (handDeckNum > 0)
             {
                 for (int i = 0; i < HandDeck.Count; i++)
                 {
@@ -153,9 +155,9 @@ public class Controller_AI : Controller
 
             if (usingCard.Count > 0)
             {
-                int mostHittedE = 10000000;                
-                Unit mostHittedUnitE = null;               
-                for(int i = 0; i < enemyBuilding.Count; i++)
+                int mostHittedE = 10000000;
+                Unit mostHittedUnitE = null;
+                for (int i = 0; i < enemyBuilding.Count; i++)
                 {
                     if (enemyBuilding != null)
                     {
@@ -164,9 +166,9 @@ public class Controller_AI : Controller
                             mostHittedE = enemyHitted[i];
                             mostHittedUnitE = enemyBuilding[i];
                         }
-                        else if(enemyHitted[i] == mostHittedE)
+                        else if (enemyHitted[i] == mostHittedE)
                         {
-                            if (Random.Range(0, 1) < (Mathf.Pow(0.5f,i)))
+                            if (Random.Range(0, 1) < (Mathf.Pow(0.5f, i)))
                             {
                                 mostHittedE = enemyHitted[i];
                                 mostHittedUnitE = enemyBuilding[i];
@@ -196,11 +198,11 @@ public class Controller_AI : Controller
                     }
                 }
 
-                if(mostHittedUnitE == null)
+                if (mostHittedUnitE == null)
                 {
                     mostHittedUnitE = mostHittedUnitM;
                 }
-                if(mostHittedUnitM == null)
+                if (mostHittedUnitM == null)
                 {
                     continue;
                 }
@@ -217,21 +219,31 @@ public class Controller_AI : Controller
                         // 防守 
                         Node nearestNode = NodeManager.instance.GetNearestNode(mostHittedUnitM.transform.position + positionOffset, Flod == "Player", 100f);
                         //Debug.LogWarning(nearestNode.transform.position);
-                        UseCard(i, nearestNode.transform.position);
+                        StartCoroutine(AIUseCard(i, nearestNode.transform.position));
                     }
                     else
                     {
                         // 攻击
                         Node nearestNode = NodeManager.instance.GetNearestNode(mostHittedUnitE.transform.position + positionOffset, Flod == "Player", 100f);
                         //Debug.LogWarning(nearestNode.transform.position);
-                        UseCard(i, nearestNode.transform.position);
+                        StartCoroutine(AIUseCard(i, nearestNode.transform.position));
                     }
+
+                    yield return new WaitForSeconds(0.3f);
                 }
             }
 
-            
+
             yield return new WaitForSeconds(judgeTime);
         }
+    }
+
+    private IEnumerator AIUseCard(int i ,Vector3 vector)
+    {
+        GameObject preLook = Instantiate(this.preLook, vector, Quaternion.identity, transform);
+        yield return new WaitForSeconds(1f);
+        UseCard(i, vector);
+        Destroy(preLook);
     }
 
     // 统计当前可用手牌数量

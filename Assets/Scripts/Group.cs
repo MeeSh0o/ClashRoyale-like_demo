@@ -46,6 +46,7 @@ public class Group : MonoBehaviour
         {
             //unit.gameObject.SetActive(false);
             Destroy(unit.gameObject);
+            Childs.Remove(unit);
             CheckUnitRemain();
         }
         else
@@ -66,6 +67,10 @@ public class Group : MonoBehaviour
             {
                 unitAlive++;
             }
+        }
+        if(Base == null)
+        {
+            BattleManager.instance.Lose(Flod);
         }
         return unitAlive;
     }

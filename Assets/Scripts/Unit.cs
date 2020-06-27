@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
     public int Hp;
+    public Transform HpBar;
 
     public Transform model;
     public Group group;
@@ -82,12 +84,17 @@ public class Unit : MonoBehaviour
             else if (GameObject.Find(Fold + "_AI")) { group = GameObject.Find(Fold + "_AI").GetComponent<Group>(); }
             else if (GameObject.Find(Fold + "_Human")) { group = GameObject.Find(Fold + "_Human").GetComponent<Group>(); }
         }
+        if(HpBar == null)
+        {
+            HpBar = model.transform.Find("HP");
+        }
 
     }
 
     public virtual void Start()
     {
         SetData();
+        HpBarManager.instance.CallABar(this);
     }
 
     public enum UnitState
@@ -150,7 +157,7 @@ public class Unit : MonoBehaviour
                         for (int i = 0; i < data.ShootNum; i++)
                         {
                             Bullet bullet = Instantiate(BattleManager.instance.prefabBullet, bulletSpawner.position, Quaternion.identity, GameManager.instance.transform).GetComponent<Bullet>();
-                            Vector3 offset = Random.Range(0, data.AttackOffset) * new Vector3(Random.value, 0, Random.value).normalized;
+                            Vector3 offset = Random.Range(0, data.AttackOffset) * new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f).normalized;
                             bullet.SetBullet(Target.model.gameObject, Fold, data.Atk, data.BulletSpeed, offset);
                         }
                     }

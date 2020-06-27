@@ -60,7 +60,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9191450859935176569}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 142d300357d08104b8547e6d890384e2, type: 3}
   m_Name: 
@@ -79,32 +79,25 @@ MonoBehaviour:
   isChosing: 0
   chosenCard: -1
   notSelect: {fileID: 0}
+  preLook: {fileID: 0}
+  _aggressive: 0
+  _storage: 0
   judgeTime: 0
   K:
   - 1
   - 1
   - 0
-  - -1
-  - -1
+  - 1
+  - 1
   - 0
   L:
-  - -1
-  - -1
+  - 1
+  - 1
   - 0
   - 1
   - 1
   - 0
   strageLimit: 0
-  enemyBuilding: []
-  myBuilding: []
-  enemyHitted: 
-  enemyHpPercentage: []
-  myHpPercentage: []
-  myHitted: 
-  k1: []
-  k2: []
-  l1: []
-  l2: []
 --- !u!1001 &788231314940616222
 PrefabInstance:
   m_ObjectHideFlags: 0
