@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
@@ -56,6 +57,12 @@ public class BattleManager : MonoBehaviour
         materialEnemy = Resources.Load("Materials/Enemy") as Material;
         materialPlayer = Resources.Load("Materials/Player") as Material;
         materialNeither = Resources.Load("Materials/Neither") as Material;
+
+        prefabBullet = Resources.Load("Bullet") as GameObject;
+        prefabSoldier = Resources.Load("Soldier") as GameObject;
+        prefabBuilding = Resources.Load("Building") as GameObject;
+
+        GameObject.Find("StartGame").GetComponent<Button>().onClick.AddListener(delegate () { this.BattleInitiate(); });
     }
 
     public Vector3 GetRandomLocation()
@@ -91,19 +98,6 @@ public class BattleManager : MonoBehaviour
         EnemyController.SetDeck(GameManager.instance.EnemyDeck);
         StartCoroutine(PlayerController.PrepareCard());
         StartCoroutine(EnemyController.PrepareCard());
-    }
-
-    /// <summary>
-    /// …Ë÷√≈∆◊È
-    /// </summary>
-    private void SetDeck()
-    {
-
-    }
-
-    public void LoadPrefabs()
-    {
-
     }
 
     public void Lose(string flod)

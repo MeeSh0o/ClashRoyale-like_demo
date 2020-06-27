@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/GameStartScene.unity
+    guid: 9dfd776d518526446b5b643e8af82934
+  - enabled: 1
+    path: Assets/Scenes/Battle_EVE.unity
+    guid: 00a7e8471d83ea243adce9658402a691
+  - enabled: 1
+    path: Assets/Scenes/Battle_PVE.unity
+    guid: 6919aaaf305298d429242a48af227fa6
+  - enabled: 1
+    path: Assets/Scenes/Battle_PVP.unity
+    guid: a5919c9d2da01e44498b82405f862dc9
   m_configObjects: {}

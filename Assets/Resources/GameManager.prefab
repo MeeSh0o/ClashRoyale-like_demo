@@ -103,7 +103,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7759667705725686355}
   - component: {fileID: 7759667705725686352}
-  - component: {fileID: 7759667705725686353}
   - component: {fileID: 1251390821}
   m_Layer: 0
   m_Name: GameManager
@@ -141,36 +140,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerDeck: d1070000d2070000d3070000d4070000d5070000
   EnemyDeck: d1070000d2070000d3070000d4070000d5070000
---- !u!114 &7759667705725686353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7759667705725686354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bcce0da4f69fff419296a5ff54e6ef9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 0}
-  Enemy: {fileID: 0}
-  playerGroup: {fileID: 0}
-  EnemyGroup: {fileID: 0}
-  PlayerController: {fileID: 0}
-  EnemyController: {fileID: 0}
-  PlayerBuilding: []
-  EnemyBuilding: []
-  prefabBullet: {fileID: 2991987677122176185, guid: 9b82348e93b8e994e98405f110ce0f2b,
-    type: 3}
-  prefabSoldier: {fileID: 780955132718287791, guid: bd5ab8fcaf8a3104e9456a1ec936f2e9,
-    type: 3}
-  prefabBuilding: {fileID: 2928732556368610492, guid: c11abca8706316e4daffae56f9e4b588,
-    type: 3}
-  materialPlayer: {fileID: 2100000, guid: 51cf1f3b826e6d94e97e63ea4fbb2016, type: 2}
-  materialEnemy: {fileID: 2100000, guid: bc4b961958d88b4489aa051dbbdd12e8, type: 2}
-  materialBoth: {fileID: 2100000, guid: 437a0f0611826734c806cf9a5f84370c, type: 2}
-  materialNeither: {fileID: 2100000, guid: dfaad18d427108948a91d51388f002d8, type: 2}
 --- !u!114 &1251390821
 MonoBehaviour:
   m_ObjectHideFlags: 0
