@@ -153,6 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bcce0da4f69fff419296a5ff54e6ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  Enemy: {fileID: 0}
   playerGroup: {fileID: 0}
   EnemyGroup: {fileID: 0}
   PlayerController: {fileID: 0}
@@ -165,8 +167,8 @@ MonoBehaviour:
     type: 3}
   prefabBuilding: {fileID: 2928732556368610492, guid: c11abca8706316e4daffae56f9e4b588,
     type: 3}
-  mareialPlayer: {fileID: 2100000, guid: 51cf1f3b826e6d94e97e63ea4fbb2016, type: 2}
-  mareialEnemy: {fileID: 2100000, guid: bc4b961958d88b4489aa051dbbdd12e8, type: 2}
+  materialPlayer: {fileID: 2100000, guid: 51cf1f3b826e6d94e97e63ea4fbb2016, type: 2}
+  materialEnemy: {fileID: 2100000, guid: bc4b961958d88b4489aa051dbbdd12e8, type: 2}
   materialBoth: {fileID: 2100000, guid: 437a0f0611826734c806cf9a5f84370c, type: 2}
   materialNeither: {fileID: 2100000, guid: dfaad18d427108948a91d51388f002d8, type: 2}
 --- !u!114 &1251390821

@@ -9,12 +9,11 @@ public class Bullet : MonoBehaviour
     public int damage;
     public Rigidbody rb;
     public Vector3 offset;
-    public Light light;
+    //public Light light;
 
     public float LifeTime = 100;
     private float lifeTime = 0;
-    private bool useful = true;
-    private float lightIntensity;
+    //private float lightIntensity;
 
     /// <summary>
     /// 阵营
@@ -105,8 +104,6 @@ public class Bullet : MonoBehaviour
         Vector2 velocityXZ = disXZ.normalized * speed;
 
         rb.velocity = new Vector3(velocityXZ.x, velocityY, velocityXZ.y);
-
-        useful = true;
     }
 
     //public void OnEnable()

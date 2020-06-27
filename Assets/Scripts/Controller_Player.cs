@@ -81,7 +81,7 @@ public class Controller_Player : Controller
             }
 
             // 在合法坐标创建一个预览模型
-            Node nearestNode = NodeManager.instance.GetNearestNode(hit.point, Flod == "Player");
+            Node nearestNode = NodeManager.instance.GetNearestNode(hit.point, Flod == "Player",6);
             if (nearestNode != null)
             {
                 // 鼠标位置合法

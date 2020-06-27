@@ -79,4 +79,44 @@ public static class Tools
         }
         return data;
     }
+    /// <summary>
+    /// 矩阵乘法，AI专用
+    /// </summary>
+    /// <param name="a1"></param>
+    /// <param name="a2"></param>
+    /// <returns></returns>
+    public static float MatrixMulty(List<int> a1, List<float> a2)
+    {
+        if (a1.Count == a2.Count)
+        {
+            float score = 0;
+            for(int i = 0; i < a1.Count; i++)
+            {
+                score += a1[i] * a2[i];
+            }
+
+            return score;
+        }
+        else return 0;
+    }
+    /// <summary>
+    /// 矩阵乘法，AI专用
+    /// </summary>
+    /// <param name="a1"></param>
+    /// <param name="a2"></param>
+    /// <returns></returns>
+    public static float MatrixMulty(List<float> a1, List<float> a2)
+    {
+        if (a1.Count == a2.Count)
+        {
+            float score = 0;
+            for (int i = 0; i < a1.Count; i++)
+            {
+                score += a1[i] * a2[i];
+            }
+
+            return score;
+        }
+        else return 0;
+    }
 }

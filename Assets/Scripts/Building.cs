@@ -50,6 +50,6 @@ public class Building : Unit
     private void OnDestroy()
     {
         List<Unit> list = Fold == "Player" ? BattleManager.instance.PlayerBuilding : BattleManager.instance.EnemyBuilding;
-        list.Remove(this);
+        if (list != null)  list.Remove(this);
     }
 }

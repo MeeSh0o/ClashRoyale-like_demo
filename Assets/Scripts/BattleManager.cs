@@ -27,9 +27,16 @@ public class BattleManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        Player = GameObject.Find("Player");
-        Enemy = GameObject.Find("Enemy");
-        if(playerGroup == null)
+
+        if (Player = GameObject.Find("Player")) { }
+        else if (Player = GameObject.Find("Player_AI")) { }
+        else if (Player = GameObject.Find("Player_Human")) { }
+
+        if (Enemy = GameObject.Find("Enemy")) { }
+        else if (Enemy = GameObject.Find("Enemy_AI")) { }
+        else if (Enemy = GameObject.Find("Enemy_Human")) { }
+
+        if (playerGroup == null)
         {
             playerGroup = Player.GetComponent<Group>();
         }

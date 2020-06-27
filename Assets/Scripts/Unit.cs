@@ -77,7 +77,11 @@ public class Unit : MonoBehaviour
             bulletSpawner = transform.Find("BulletSpawner");
 
         if (group == null)
-            group = GameObject.Find(Fold).GetComponent<Group>();
+        {
+            if (GameObject.Find(Fold)) { group = GameObject.Find(Fold).GetComponent<Group>(); }
+            else if (GameObject.Find(Fold + "_AI")) { group = GameObject.Find(Fold + "_AI").GetComponent<Group>(); }
+            else if (GameObject.Find(Fold + "_Human")) { group = GameObject.Find(Fold + "_Human").GetComponent<Group>(); }
+        }
 
     }
 

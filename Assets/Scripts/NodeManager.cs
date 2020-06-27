@@ -88,7 +88,7 @@ public class NodeManager : MonoBehaviour
     /// <param name="vector"></param>
     /// <param name="isPlayer"></param>
     /// <returns></returns>
-    public Node GetNearestNode(Vector3 vector,bool isPlayer)
+    public Node GetNearestNode(Vector3 vector,bool isPlayer, float range)
     {
         int x = Convert.ToInt32(vector.x) + 9;
         int z = Convert.ToInt32(vector.z) + 15;
@@ -105,8 +105,8 @@ public class NodeManager : MonoBehaviour
         }
         else
         {
-            xmin = x - 4 >= 0 ? x - 4 : 0;
-            xmax = x + 4 <= 18 ? x + 4 : 18;
+            xmin = x - (int)range >= 0 ? x - (int)range : 0;
+            xmax = x + (int)range <= 18 ? x + (int)range : 18;
         }
         if (z < 0)
         {
@@ -118,12 +118,12 @@ public class NodeManager : MonoBehaviour
         }
         else
         {
-            zmin = z - 4 >= 0 ? z - 4 : 0;
-            zmax = z + 4 <= 30 ? z + 4 : 30;
+            zmin = z - (int)range >= 0 ? z - (int)range : 0;
+            zmax = z + (int)range <= 30 ? z + (int)range : 30;
         }
 
         Node nearestNode = null;
-        float dis = 6;
+        float dis = range;
 
         for (int i = xmin; i <= xmax; i++)
         {
