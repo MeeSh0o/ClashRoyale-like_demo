@@ -11,8 +11,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public List<List<string>> unitData;
-
     public List<int> PlayerDeck;
     public List<int> EnemyDeck;
 
@@ -20,15 +18,19 @@ public class GameManager : MonoBehaviour
 
     public bool inBattleScene = false;
 
+    public List<GameObject> BattleSceneObjects;
+
+    public bool isPlayerHuman;
+    public bool isEnemyHuman;
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
         if(instance == null)
+        {
             instance = this;
-
-        DontDestroyOnLoad(gameObject);
-
-        unitData = DataLoader.instance.LoadData("Unit.xlsx");
+            DontDestroyOnLoad(gameObject);
+        }
 
         if (battleManager == null)
         battleManager = Resources.Load("BattleManager") as GameObject;
@@ -38,66 +40,80 @@ public class GameManager : MonoBehaviour
         if (inBattleScene)
         {
             OnEnterBattleScene();
+            GameObject.Find("BackToMenu").GetComponent<Button>().onClick.AddListener(delegate () { instance.BackToMenu(); });
+            GameObject.Find("ReloadGame").GetComponent<Button>().onClick.AddListener(delegate () { instance.Reload(); });
         }
         else if (!inBattleScene)
         {
             OnEnterMenuScene();
+            //GameObject.Find("PVE").GetComponent<Button>().onClick.AddListener(delegate () { instance.EnterBattleScene("Battle"); });
+            //GameObject.Find("PVP").GetComponent<Button>().onClick.AddListener(delegate () { instance.EnterBattleScene("Battle_PVP"); });
+            //GameObject.Find("EVE").GetComponent<Button>().onClick.AddListener(delegate () { instance.EnterBattleScene("Battle_EVE"); });
         }
     }
+
 
     public void OnEnterBattleScene()
     {
         Debug.Log("进入战斗场景");
+
+        foreach(GameObject obj in BattleSceneObjects)
+        {
+            //Instantiate(obj).name = obj.name;
+        }
+
         if (BattleManager.instance == null) Instantiate(battleManager);
-        GameObject.Find("BackToMenu").GetComponent<Button>().onClick.AddListener(delegate () { instance.BackToMenu(); });
-        GameObject.Find("ReloadGame").GetComponent<Button>().onClick.AddListener(delegate () { instance.Reload(); });
+
     }
     public void OnEnterMenuScene()
     {
         Debug.Log("进入主选单");
-        GameObject.Find("PVE").GetComponent<Button>().onClick.AddListener(delegate () { instance.EnterBattleScene("Battle_PVE"); });
-        GameObject.Find("PVP").GetComponent<Button>().onClick.AddListener(delegate () { instance.EnterBattleScene("Battle_PVP"); });
-        GameObject.Find("EVE").GetComponent<Button>().onClick.AddListener(delegate () { instance.EnterBattleScene("Battle_EVE"); });
+
     }
 
+    // 用于按钮
     public void EnterBattleScene(string scene)
     {
         SceneManager.LoadScene(scene);
-        SceneManager.sceneLoaded += LoadedBattle;
+        //SceneManager.sceneLoaded += LoadedBattle;
         inBattleScene = true;
     }
 
+    // 用于按钮
     public void BackToMenu()
     {
         SceneManager.LoadScene("GameStartScene");
-        SceneManager.sceneLoaded += LoadedMenu;
+        //SceneManager.sceneLoaded += LoadedMenu;
         inBattleScene = false;
     }
 
+    // 用于按钮
     public void Reload()
     {
-        if(SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            SceneManager.sceneLoaded += LoadedMenu;
-        }
-        else
-        {
-            SceneManager.sceneLoaded += LoadedBattle;
-        }
+        //if(SceneManager.GetActiveScene().buildIndex == 0)
+        //{
+        //    SceneManager.sceneLoaded += LoadedMenu;
+        //}
+        //else
+        //{
+        //    SceneManager.sceneLoaded += LoadedBattle;
+        //}
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 
-    static void LoadedBattle(Scene s, LoadSceneMode l)
-    {
-        SceneManager.sceneLoaded -= LoadedBattle;
-        //instance.OnEnterBattleScene();
-    }
-    static void LoadedMenu(Scene s, LoadSceneMode l)
-    {
-        SceneManager.sceneLoaded -= LoadedMenu;
-        //instance.OnEnterMenuScene();
-    }
+    //static void LoadedBattle(Scene s, LoadSceneMode l)
+    //{
+    //    SceneManager.sceneLoaded -= LoadedBattle;
+    //    //instance.OnEnterBattleScene();
+    //}
+    //static void LoadedMenu(Scene s, LoadSceneMode l)
+    //{
+    //    SceneManager.sceneLoaded -= LoadedMenu;
+    //    //instance.OnEnterMenuScene();
+    //}
+
+
 }
 
 

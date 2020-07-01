@@ -45,39 +45,40 @@ public static class Tools
     public static UnitData GetUnitData(int id)
     {
         int dataIndex = 0;
-        for (int i = 0; i < GameManager.instance.unitData.Count; i++)
+        for (int i = 0; i < DataLoader.instance.unitData.Count; i++)
         {
-            if (String2Int(GameManager.instance.unitData[i][0]).Equals(id))
+            if (String2Int(DataLoader.instance.unitData[i][0]).Equals(id))
             {
                 dataIndex = i;
                 break;
             }
         }
-        UnitData data = new UnitData
-        {
-            ID = String2Int(GameManager.instance.unitData[dataIndex][0]),
-            PrepareTime = String2Float(GameManager.instance.unitData[dataIndex][1]),
-            Name = GameManager.instance.unitData[dataIndex][2],
-            Hp = String2Int(GameManager.instance.unitData[dataIndex][3]),
-            Atk = String2Int(GameManager.instance.unitData[dataIndex][4]),
-            Number = String2Int(GameManager.instance.unitData[dataIndex][5]),
-            Model = String2Int(GameManager.instance.unitData[dataIndex][6]),
-            Speed = String2Float(GameManager.instance.unitData[dataIndex][7]),
-            ProxyRadius = String2Float(GameManager.instance.unitData[dataIndex][8]),
-            Priority = String2Int(GameManager.instance.unitData[dataIndex][9]),
-            HitRange = String2Float(GameManager.instance.unitData[dataIndex][10]),
-            ScanRange = String2Float(GameManager.instance.unitData[dataIndex][11]),
-            AttackTime = String2Float(GameManager.instance.unitData[dataIndex][12]),
-            AttackOffset = String2Float(GameManager.instance.unitData[dataIndex][13]),
-            ShootNum = String2Float(GameManager.instance.unitData[dataIndex][14]),
-            BulletSpeed = String2Float(GameManager.instance.unitData[dataIndex][15]),
-
-        };
-        if(dataIndex == 0)
+        if (dataIndex == 0)
         {
             Debug.LogWarning("数据ID为0或查找失败");
         }
-        return data;
+        List<string> data = DataLoader.instance.unitData[dataIndex];
+        UnitData temp = new UnitData
+        {
+            ID = String2Int(data[0]),
+            PrepareTime = String2Float(data[1]),
+            Name = data[2],
+            Hp = String2Int(data[3]),
+            Atk = String2Int(data[4]),
+            Number = String2Int(data[5]),
+            Model = String2Int(data[6]),
+            Speed = String2Float(data[7]),
+            ProxyRadius = String2Float(data[8]),
+            Priority = String2Int(data[9]),
+            HitRange = String2Float(data[10]),
+            ScanRange = String2Float(data[11]),
+            AttackTime = String2Float(data[12]),
+            AttackOffset = String2Float(data[13]),
+            ShootNum = String2Float(data[14]),
+            BulletSpeed = String2Float(data[15]),
+
+        };
+        return temp;
     }
     /// <summary>
     /// 矩阵乘法，AI专用

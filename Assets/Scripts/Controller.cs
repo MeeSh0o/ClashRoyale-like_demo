@@ -41,26 +41,40 @@ public class Controller : MonoBehaviour
     /// <summary>
     /// 手牌UI
     /// </summary>
-    public List<Button> HandCardUI;
+    public List<Button> HandCardUI = new List<Button>();
 
-    public List<Text> HandCardText;
+    public List<Text> HandCardText = new List<Text>();
 
-    public Group group;
+    protected Group group;
 
     /// <summary>
     /// 当前是否选中牌
     /// </summary>
-    public bool isChosing = false;
+    protected bool isChosing = false;
     /// <summary>
     /// 当前选中的牌
     /// </summary>
-    public int chosenCard = -1;
+    protected int chosenCard = -1;
 
 
-    public Button notSelect;
-    public GameObject preLook;
+    protected Button notSelect;
+    protected GameObject preLook;
+
+
 
     public virtual void Awake()
+    {
+        HandDeck = new List<int>(new int[] { -1, -1, -1, -1 });
+        
+        PrepareUnit = -1;
+
+        if(group == null)
+        {
+            group = GetComponent<Group>();
+        }     
+    }
+
+    public virtual void Start()
     {
         for (int i = 0; i < 5; i++)
         {
@@ -72,7 +86,6 @@ public class Controller : MonoBehaviour
             int j = i;
             HandCardUI[i].GetComponent<Button>().onClick.AddListener(delegate () { this.CallACard(j); });// 给按钮挂监听脚本
         }
-        HandDeck = new List<int>(new int[] { -1, -1, -1, -1 });
         for (int i = 0; i < HandCardUI.Count - 1; i++)
         {
             UpdateCardUI(i);
@@ -81,15 +94,8 @@ public class Controller : MonoBehaviour
         {
             notSelect = GameObject.Find("NotSelect").GetComponent<Button>();
         }
-
-        PrepareUnit = -1;
-
-        if(group == null)
-        {
-            group = GetComponent<Group>();
-        }
-        
     }
+
 
     /// <summary>
     /// 设置牌组
@@ -133,7 +139,7 @@ public class Controller : MonoBehaviour
             int index = Random.Range(0, DrawDeck.Count);
             int id = DrawDeck[index];
             DrawDeck.Remove(id);
-            Debug.Log("玩家" + Fold + "抽到了牌: " + id.ToString() + Tools.GetUnitData(id).Name);
+            Debug.Log("玩家" + Fold + "抽到了牌: " + id.ToString() + DataLoader.instance.GetUnitData(id).Name);
             return id;
         }
         else
@@ -157,7 +163,7 @@ public class Controller : MonoBehaviour
         else
         {
             HandCardUI[i].gameObject.SetActive(true);
-            HandCardText[i].text = Tools.GetUnitData(HandDeck[i]).Name + "\n" + (i + 1).ToString();
+            HandCardText[i].text = DataLoader.instance.GetUnitData(HandDeck[i]).Name + "\n" + (i + 1).ToString();
         }
     }
 
@@ -177,9 +183,9 @@ public class Controller : MonoBehaviour
             if (PrepareUnit == -1)
             {
                 PrepareUnit = DrawACard();
-                PrepareTime = Tools.GetUnitData(PrepareUnit).PrepareTime;
+                PrepareTime = DataLoader.instance.GetUnitData(PrepareUnit).PrepareTime;
                 prepareTime = 0;
-                name = Tools.GetUnitData(PrepareUnit).Name;
+                name = DataLoader.instance.GetUnitData(PrepareUnit).Name;
             }
             // 计时
             while (prepareTime < PrepareTime)
@@ -217,7 +223,7 @@ public class Controller : MonoBehaviour
     /// <param name="position"></param>
     public void UseCard(int i, Vector3 position)
     {
-        Debug.Log("玩家" + Fold + "使用牌 " + (i + 1).ToString() + " " + Tools.GetUnitData(HandDeck[i]).Name);
+        Debug.Log("玩家" + Fold + "使用牌 " + (i + 1).ToString() + " " + DataLoader.instance.GetUnitData(HandDeck[i]).Name);
 
         int id = HandDeck[i];
 

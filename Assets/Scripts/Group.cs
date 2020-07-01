@@ -20,8 +20,8 @@ public class Group : MonoBehaviour
 
     public void SpawnUnit(int id, Vector3 position)
     {
-        GameObject prefab = id < 2000 ? BattleManager.instance.prefabBuilding : BattleManager.instance.prefabSoldier;
-        UnitData unitData = Tools.GetUnitData(id);
+        GameObject prefab = id < 2000 ? DataLoader.instance.GetPrefab("Building")  : DataLoader.instance.GetPrefab("Soldier");
+        UnitData unitData = DataLoader.instance.GetUnitData(id);
         for(int i = 0; i < unitData.Number; i++)
         {
             // 获取prefab和data

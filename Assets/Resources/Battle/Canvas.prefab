@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 785347451}
   - component: {fileID: 785347454}
   - component: {fileID: 785347453}
+  - component: {fileID: 5882137320685244591}
   - component: {fileID: 785347452}
   m_Layer: 5
   m_Name: ReloadGame
@@ -76,6 +77,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5882137320685244591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785347450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84103862ec295514b9b375c7380237ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropdown: {fileID: 0}
+  buttom: {fileID: 785347452}
+  ButtonName: Reload
 --- !u!114 &785347452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -834,6 +850,7 @@ GameObject:
   - component: {fileID: 4064651377116900046}
   - component: {fileID: 278496136771603643}
   - component: {fileID: 4275183816304463929}
+  - component: {fileID: 8189604060172115366}
   m_Layer: 5
   m_Name: StartGame
   m_TagString: Untagged
@@ -952,6 +969,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8189604060172115366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8469180813728944390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84103862ec295514b9b375c7380237ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropdown: {fileID: 0}
+  buttom: {fileID: 4275183816304463929}
+  ButtonName: StartBattle
 --- !u!1 &8801125845364014311
 GameObject:
   m_ObjectHideFlags: 0

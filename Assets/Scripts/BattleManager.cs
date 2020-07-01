@@ -19,25 +19,12 @@ public class BattleManager : MonoBehaviour
     public List<Unit> PlayerBuilding = new List<Unit>();
     public List<Unit> EnemyBuilding = new List<Unit>();
 
-
-    public GameObject prefabBullet;
-    public GameObject prefabSoldier;
-    public GameObject prefabBuilding;
-    //public Material materialPlayer, materialEnemy,materialBoth,materialNeither;
-
-    
-
     private void Awake()
     {
         instance = this;
 
-        if (Player = GameObject.Find("Player")) { }
-        else if (Player = GameObject.Find("Player_AI")) { }
-        else if (Player = GameObject.Find("Player_Human")) { }
-
-        if (Enemy = GameObject.Find("Enemy")) { }
-        else if (Enemy = GameObject.Find("Enemy_AI")) { }
-        else if (Enemy = GameObject.Find("Enemy_Human")) { }
+        if ((Player = GameObject.Find("Player")) ||( Player = GameObject.Find("Player_AI")) || (Player = GameObject.Find("Player_Human"))) { }
+        if ((Enemy = GameObject.Find("Enemy")) || (Enemy = GameObject.Find("Enemy_AI")) || (Enemy = GameObject.Find("Enemy_Human"))) { }
 
         if (playerGroup == null)
         {
@@ -55,16 +42,7 @@ public class BattleManager : MonoBehaviour
         {
             EnemyController = Enemy.GetComponent<Controller>();
         }
-        //materialBoth = Resources.Load("Materials/Both") as Material;
-        //materialEnemy = Resources.Load("Materials/Enemy") as Material;
-        //materialPlayer = Resources.Load("Materials/Player") as Material;
-        //materialNeither = Resources.Load("Materials/Neither") as Material;
-
-        prefabBullet = Resources.Load("Bullet") as GameObject;
-        prefabSoldier = Resources.Load("Soldier") as GameObject;
-        prefabBuilding = Resources.Load("Building") as GameObject;
-
-        GameObject.Find("StartGame").GetComponent<Button>().onClick.AddListener(delegate () { this.BattleInitiate(); });
+        
     }
 
     public Vector3 GetRandomLocation()

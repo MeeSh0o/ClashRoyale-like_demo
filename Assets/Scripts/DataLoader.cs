@@ -10,11 +10,17 @@ public class DataLoader : MonoBehaviour
 {
     public static DataLoader instance;
 
+    public List<List<string>> unitData;
+
     public List<List<string>> modelData;
+
+    public Dictionary<int, UnitData> unitDataDictionary = new Dictionary<int, UnitData>();
 
     public Dictionary<int, GameObject> modelPrefabDictionary = new Dictionary<int, GameObject>();
 
     public Dictionary<string, Material> materialDictionary = new Dictionary<string, Material>();
+
+    public Dictionary<string, GameObject> prefabDictionary = new Dictionary<string, GameObject>();
 
     string value;
     //string all;
@@ -24,6 +30,7 @@ public class DataLoader : MonoBehaviour
         instance = this;
 
         modelData = LoadData("UnitModel.xlsx");
+        unitData = LoadData("Unit.xlsx");
     }
 
     /// <summary>
@@ -129,6 +136,20 @@ public class DataLoader : MonoBehaviour
         }
     }
 
+    public UnitData GetUnitData(int dataID)
+    {
+        if (unitDataDictionary.ContainsKey(dataID))
+        {
+            return unitDataDictionary[dataID];
+        }
+        else
+        {
+            UnitData temp = Tools.GetUnitData(dataID);
+            unitDataDictionary.Add(dataID, temp);
+            return temp;
+        }
+    }
+
     /// <summary>
     /// 获取对应ModelID的mpdelPrefab
     /// </summary>
@@ -185,4 +206,25 @@ public class DataLoader : MonoBehaviour
 
         }
     }
+
+    /// <summary>
+    /// 获取预制体
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public GameObject GetPrefab(string name)
+    {
+        if (prefabDictionary.ContainsKey(name))
+        {
+            return prefabDictionary[name];
+        }
+        else
+        {
+            GameObject temp = Resources.Load(name) as GameObject;
+            prefabDictionary.Add(name, temp);
+            return temp;
+
+        }
+    }
+
 }
