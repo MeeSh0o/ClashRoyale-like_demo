@@ -22,8 +22,11 @@ public class BattleManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
 
-        if ((Player = GameObject.Find("Player")) ||( Player = GameObject.Find("Player_AI")) || (Player = GameObject.Find("Player_Human"))) { }
+    private void Start()
+    {
+        if ((Player = GameObject.Find("Player")) || (Player = GameObject.Find("Player_AI")) || (Player = GameObject.Find("Player_Human"))) { }
         if ((Enemy = GameObject.Find("Enemy")) || (Enemy = GameObject.Find("Enemy_AI")) || (Enemy = GameObject.Find("Enemy_Human"))) { }
 
         if (playerGroup == null)
@@ -42,8 +45,10 @@ public class BattleManager : MonoBehaviour
         {
             EnemyController = Enemy.GetComponent<Controller>();
         }
-        
+        playerGroup.Fold = PlayerController.Fold = "Player";
+        EnemyGroup.Fold = EnemyController.Fold = "Enemy";
     }
+    
 
     public Vector3 GetRandomLocation()
     {

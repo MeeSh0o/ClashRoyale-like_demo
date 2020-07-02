@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142d300357d08104b8547e6d890384e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Fold: Player
+  Fold: Enemy
   Deck: 
   DrawDeck: 
   AbandonDeck: 
@@ -74,11 +74,6 @@ MonoBehaviour:
   HandDeck: 
   HandCardUI: []
   HandCardText: []
-  group: {fileID: 9191450859935176571}
-  isChosing: 0
-  chosenCard: -1
-  notSelect: {fileID: 0}
-  preLook: {fileID: 0}
   _aggressive: 0
   _storage: 0
   judgeTime: 0

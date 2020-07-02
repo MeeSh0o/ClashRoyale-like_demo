@@ -76,6 +76,8 @@ public class Controller : MonoBehaviour
 
     public virtual void Start()
     {
+        Debug.Log(Fold);
+        Debug.Log(GameObject.Find("PlayerDeck1"));
         for (int i = 0; i < 5; i++)
         {
             HandCardUI.Add(GameObject.Find(Fold + "Deck" + (i + 1).ToString()).GetComponent<Button>());

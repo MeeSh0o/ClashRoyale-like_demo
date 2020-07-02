@@ -40,8 +40,8 @@ public class GameManager : MonoBehaviour
         if (inBattleScene)
         {
             OnEnterBattleScene();
-            GameObject.Find("BackToMenu").GetComponent<Button>().onClick.AddListener(delegate () { instance.BackToMenu(); });
-            GameObject.Find("ReloadGame").GetComponent<Button>().onClick.AddListener(delegate () { instance.Reload(); });
+            //GameObject.Find("BackToMenu").GetComponent<Button>().onClick.AddListener(delegate () { instance.BackToMenu(); });
+            //GameObject.Find("ReloadGame").GetComponent<Button>().onClick.AddListener(delegate () { instance.Reload(); });
         }
         else if (!inBattleScene)
         {
@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
 
         foreach(GameObject obj in BattleSceneObjects)
         {
-            //Instantiate(obj).name = obj.name;
+            Instantiate(obj).name = obj.name;
         }
 
         if (BattleManager.instance == null) Instantiate(battleManager);
