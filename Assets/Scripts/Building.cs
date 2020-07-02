@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Building : Unit
 {
-    public override void Awake()
-    {
-        base.Awake();
-    }
+    //public override void Awake()
+    //{
+    //    base.Awake();
+    //}
 
     public override void Start()
     {
@@ -30,15 +30,15 @@ public class Building : Unit
         }
     }
 
-    public override void Idle()
-    {
-        base.Idle();
-    }
+    //public override void Idle()
+    //{
+    //    base.Idle();
+    //}
 
-    public override void Attack()
-    {
-        base.Attack();
-    }
+    //public override void Attack()
+    //{
+    //    base.Attack();
+    //}
 
     public override void Death()
     {

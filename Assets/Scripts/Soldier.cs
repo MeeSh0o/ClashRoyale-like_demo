@@ -76,7 +76,7 @@ public class Soldier : Unit
 
     public override void Idle()
     {
-        base.Idle();
+        SetTarget(EnemyCheck());
         if (Target != null)
         {
             SwitchState(UnitState.run);
@@ -97,7 +97,8 @@ public class Soldier : Unit
         {
             SwitchState(UnitState.attack);
         }
-        else if (GetType() == Target.GetType() && Tools.Distance(Target.model.transform, model.transform) >= data.ScanRange) // 追不到就放弃
+        else if (GetType() == Target.GetType()/* 确保不会放弃打建筑物 */ 
+            && Tools.Distance(Target.model.transform, model.transform) >= data.ScanRange) // 追不到就放弃
         {
             SwitchState(UnitState.idle);
         }
@@ -116,10 +117,10 @@ public class Soldier : Unit
         base.Attack();
     }
 
-    public override void Death()
-    {
-        base.Death();
-    }
+    //public override void Death()
+    //{
+    //    base.Death();
+    //}
 
     /// <summary>
     /// 切换Obstacle
@@ -156,7 +157,7 @@ public class Soldier : Unit
                 SwitchObstacle(false);
                 break;
             case UnitState.idle:
-                SwitchObstacle(false);
+                SwitchObstacle(true);
                 break;
             case UnitState.run:
                 SwitchObstacle(true);
