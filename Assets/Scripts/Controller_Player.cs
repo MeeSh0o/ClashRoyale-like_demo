@@ -23,18 +23,19 @@ public class Controller_Player : Controller
             preLook = Instantiate(Resources.Load("Battle/PreLook" + Fold) as GameObject, transform);
         }
 
-        for(int i = 0;i<HandCardUI.Count - 1; i++)
+        rayHitMask = 4096;
+    }
+
+    public override void Start()
+    {
+        base.Start();
+        mainCamera = Camera.main;
+
+        for (int i = 0; i < HandCardUI.Count - 1; i++)
         {
             HandCardUI[i].interactable = true;
             HandCardText[i].color = Color.black;
         }
-
-        rayHitMask = 4096;
-    }
-
-    private void Start()
-    {
-        mainCamera = Camera.main;
     }
 
     private void Update()

@@ -53,8 +53,9 @@ public class Controller_AI : Controller
         preLook = Resources.Load("Battle/PreLook" + Fold) as GameObject;
     }
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         if (enemyGroup == null)
         {
             enemyGroup = Fold == "Player" ? BattleManager.instance.EnemyGroup : BattleManager.instance.playerGroup;

@@ -25,8 +25,7 @@ public class Unit : MonoBehaviour
     /// 状态
     /// </summary>
     public UnitState state;
-
-    
+   
     /// <summary>
     /// 当前仇恨对象
     /// </summary>
@@ -66,6 +65,9 @@ public class Unit : MonoBehaviour
             model.tag = value;
         }
     }
+
+
+
     public virtual void Awake()
     {
         EnemiesInField = new List<Unit>();
@@ -76,15 +78,6 @@ public class Unit : MonoBehaviour
         if (attackTrigger == null)
             attackTrigger = transform.Find("AttackTrigger").GetComponent<AttackTrigger>();
 
-        if (bulletSpawner == null)
-            bulletSpawner = transform.Find("BulletSpawner");
-
-        if (group == null)
-        {
-            if (GameObject.Find(Fold)) { group = GameObject.Find(Fold).GetComponent<Group>(); }
-            else if (GameObject.Find(Fold + "_AI")) { group = GameObject.Find(Fold + "_AI").GetComponent<Group>(); }
-            else if (GameObject.Find(Fold + "_Human")) { group = GameObject.Find(Fold + "_Human").GetComponent<Group>(); }
-        }
         if(HpBar == null)
         {
             HpBar = model.transform.Find("HP");
@@ -94,6 +87,12 @@ public class Unit : MonoBehaviour
 
     public virtual void Start()
     {
+        if (group == null)
+        {
+            if (GameObject.Find(Fold)) { group = GameObject.Find(Fold).GetComponent<Group>(); }
+            //else if (GameObject.Find(Fold + "_AI")) { group = GameObject.Find(Fold + "_AI").GetComponent<Group>(); }
+            //else if (GameObject.Find(Fold + "_Human")) { group = GameObject.Find(Fold + "_Human").GetComponent<Group>(); }
+        }
         if (!initiated) Initiate(id);
         HpBarManager.instance.CallABar(this);
     }
@@ -109,7 +108,7 @@ public class Unit : MonoBehaviour
         attackTrigger.GetComponent<SphereCollider>().radius = data.ScanRange;
 
         if (bulletSpawner == null)
-            bulletSpawner = transform.Find("BulletSpawner");
+            bulletSpawner = model.transform.Find("BulletSpawner");
 
         for (int i = 0; i < model.transform.childCount; i++)
         {
@@ -180,7 +179,7 @@ public class Unit : MonoBehaviour
                         
                         for (int i = 0; i < data.ShootNum; i++)
                         {
-                            Bullet bullet = Instantiate(BattleManager.instance.prefabBullet, bulletSpawner.position, Quaternion.identity, GameManager.instance.transform).GetComponent<Bullet>();
+                            Bullet bullet = Instantiate(DataLoader.instance.GetPrefab("Bullet"), bulletSpawner.position, Quaternion.identity, GameManager.instance.transform).GetComponent<Bullet>();
                             Vector3 offset = Random.Range(0, data.AttackOffset) * new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f).normalized;
                             bullet.SetBullet(Target.model.gameObject, Fold, data.Atk, data.BulletSpeed, offset);
                         }
