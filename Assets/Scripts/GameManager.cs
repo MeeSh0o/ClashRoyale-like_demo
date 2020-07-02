@@ -40,15 +40,10 @@ public class GameManager : MonoBehaviour
         if (inBattleScene)
         {
             OnEnterBattleScene();
-            //GameObject.Find("BackToMenu").GetComponent<Button>().onClick.AddListener(delegate () { instance.BackToMenu(); });
-            //GameObject.Find("ReloadGame").GetComponent<Button>().onClick.AddListener(delegate () { instance.Reload(); });
         }
         else if (!inBattleScene)
         {
             OnEnterMenuScene();
-            //GameObject.Find("PVE").GetComponent<Button>().onClick.AddListener(delegate () { instance.EnterBattleScene("Battle"); });
-            //GameObject.Find("PVP").GetComponent<Button>().onClick.AddListener(delegate () { instance.EnterBattleScene("Battle_PVP"); });
-            //GameObject.Find("EVE").GetComponent<Button>().onClick.AddListener(delegate () { instance.EnterBattleScene("Battle_EVE"); });
         }
     }
 

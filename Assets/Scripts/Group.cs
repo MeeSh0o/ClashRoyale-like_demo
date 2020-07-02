@@ -28,8 +28,8 @@ public class Group : MonoBehaviour
             // 创建
             GameObject obj = Instantiate(prefab, position, Fold=="Player"? Quaternion.identity: new Quaternion(0,1,0,0), transform);
             Unit unit = obj.GetComponent<Unit>();
-            unit.Initiate(id);
             unit.Fold = Fold;
+            unit.Initiate(id);           
             Childs.Add(unit);
 
             obj.SetActive(true);    

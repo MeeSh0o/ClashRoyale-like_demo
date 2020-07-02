@@ -26,7 +26,7 @@ public class GameUI : MonoBehaviour
                 buttom.onClick.AddListener(delegate () { GameManager.instance.EnterBattleScene("Battle"); });
                 break;
             case ("Relaod"):
-                buttom.onClick.AddListener(delegate () { GameManager.instance.Reload(); });
+                buttom.onClick.AddListener(delegate () { Reload(); });
                 break;
             case ("StartBattle"):
                 buttom.onClick.AddListener(delegate () { BattleManager.instance.BattleInitiate(); });
@@ -70,5 +70,8 @@ public class GameUI : MonoBehaviour
         }
     }
 
-
+    void Reload()
+    {
+        GameManager.instance.Reload();
+    }
 }

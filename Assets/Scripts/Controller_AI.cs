@@ -56,16 +56,17 @@ public class Controller_AI : Controller
     public override void Start()
     {
         base.Start();
-        if (enemyGroup == null)
-        {
-            enemyGroup = Fold == "Player" ? BattleManager.instance.EnemyGroup : BattleManager.instance.playerGroup;
-        }
+
+ 
     }
 
     public override void EnableAI()
     {
         base.EnableAI();
-
+        if (enemyGroup == null)
+        {
+            enemyGroup = Fold == "Player" ? BattleManager.instance.EnemyGroup : BattleManager.instance.playerGroup;
+        }
         foreach (Unit i in enemyGroup.Buildings)
         {
             enemyBuilding.Add(i);
