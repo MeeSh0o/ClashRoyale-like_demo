@@ -32,7 +32,7 @@ public class HpBarManager : MonoBehaviour
         {
             if(bars[i] != null)
             {
-                PHFollowEnemy(bars[i].HpBar.transform, hps[i], Vector3.forward * 2);
+                HPFollowUnit(bars[i].HpBar.transform, hps[i], Vector3.left * 2);
                 hps[i].text = bars[i].Hp.ToString() + "/" + bars[i].data.Hp.ToString();
             }
             else
@@ -44,7 +44,7 @@ public class HpBarManager : MonoBehaviour
         }
     }
 
-    void PHFollowEnemy(Transform transform, Text text, Vector3 offset)
+    void HPFollowUnit(Transform transform, Text text, Vector3 offset)
     {
         Vector3 position = Camera.main.WorldToScreenPoint(transform.position) + offset;
         text.transform.position = position;

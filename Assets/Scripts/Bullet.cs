@@ -40,6 +40,8 @@ public class Bullet : MonoBehaviour
         if(Target != null)
         {
             // 方向修正
+            Vector2 targetPos = new Vector2(transform.position.x, transform.position.z) + new Vector2(offset.x, offset.z);
+
             Vector2 disXZ = new Vector2(Target.transform.position.x, Target.transform.position.z) - new Vector2(transform.position.x, transform.position.z) + new Vector2(offset.x, offset.z);
             Vector2 targetV = disXZ.normalized * speed;
 
@@ -56,7 +58,7 @@ public class Bullet : MonoBehaviour
         }
 
 
-        if (transform.position.y < -100)
+        if (transform.position.y < -10)
         {
             Destroy(gameObject);
         }

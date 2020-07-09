@@ -25,11 +25,14 @@ public class GameUI : MonoBehaviour
             case ("EnterBattle"):
                 buttom.onClick.AddListener(delegate () { GameManager.instance.EnterBattleScene("Battle"); });
                 break;
-            case ("Relaod"):
+            case ("Reload"):
                 buttom.onClick.AddListener(delegate () { Reload(); });
                 break;
             case ("StartBattle"):
                 buttom.onClick.AddListener(delegate () { BattleManager.instance.BattleInitiate(); });
+                break;
+            case ("BackToMenu"):
+                buttom.onClick.AddListener(delegate () { GameManager.instance.BackToMenu(); });
                 break;
             default:
                 break;
@@ -72,6 +75,7 @@ public class GameUI : MonoBehaviour
 
     void Reload()
     {
+        Debug.Log("Reload");
         GameManager.instance.Reload();
     }
 }

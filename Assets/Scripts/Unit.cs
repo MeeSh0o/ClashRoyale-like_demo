@@ -66,7 +66,17 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public enum UnitState
+    {
+        idle,
+        run,
+        attack,
+        death
+    }
 
+    public float attackTime = 0;
+
+    /*------------------------------------分割线------------------------------------------*/
 
     public virtual void Awake()
     {
@@ -119,16 +129,6 @@ public class Unit : MonoBehaviour
         initiated = true;
     }
 
-
-    public enum UnitState
-    {
-        idle,
-        run,
-        attack,
-        death
-    }
-
-    public float attackTime = 0;
     public virtual void Update()
     {
         switch (state)
@@ -146,8 +146,11 @@ public class Unit : MonoBehaviour
                 Run();
                 break;
         }
-        attackTime += Time.deltaTime;
+        if (attackTime < data.AttackTime)
+            attackTime += Time.deltaTime;
     }
+
+    /*------------------------------------分割线------------------------------------------*/
 
     /// <summary>
     /// 静止状态，作用是找人
@@ -155,51 +158,9 @@ public class Unit : MonoBehaviour
     public virtual void Idle()
     {
         SetTarget(EnemyCheck());
-        if(Target!= null)
-        {
-            SwitchState(UnitState.attack);
-        }
-    }
-
-
-    /// <summary>
-    /// 攻击状态，作用是站着不动打人
-    /// </summary>
-    public virtual void Attack()
-    {
-        if (Target != null)
-        {
-            if (Target.gameObject.activeSelf)
-            {
-                if (Tools.Distance(model.transform, Target.model.transform) <= data.HitRange)
-                {
-                    if (attackTime >= data.AttackTime)
-                    {
-                        attackTime = 0;
-                        
-                        for (int i = 0; i < data.ShootNum; i++)
-                        {
-                            Bullet bullet = Instantiate(DataLoader.instance.GetPrefab("Bullet"), bulletSpawner.position, Quaternion.identity, GameManager.instance.transform).GetComponent<Bullet>();
-                            Vector3 offset = Random.Range(0, data.AttackOffset) * new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f).normalized;
-                            bullet.SetBullet(Target.model.gameObject, Fold, data.Atk, data.BulletSpeed, offset);
-                        }
-                    }
-                }
-                else
-                {
-                    SwitchState(UnitState.idle);
-                }
-            }
-            else
-            {
-                SwitchState(UnitState.idle);
-            }
-        }
-        else
-        {
-            SwitchState(UnitState.idle);
-        }
-
+        if (Target == null) return;
+        if (Tools.Distance(Target.model.transform, model.transform) <= data.HitRange) SwitchState(UnitState.attack);
+  
     }
 
     /// <summary>
@@ -208,6 +169,44 @@ public class Unit : MonoBehaviour
     public virtual void Run()
     {
 
+    }
+
+    /// <summary>
+    /// 攻击状态，作用是站着不动打人
+    /// </summary>
+    public virtual void Attack()
+    {
+        if (Target == null)
+        {
+            // 如果死了，就换目标
+            SwitchState(UnitState.idle);
+            return;
+        }
+        else if (!Target.gameObject.activeSelf || Target.state == UnitState.death)
+        {
+            // 如果死了，就换目标
+            SwitchState(UnitState.idle);
+            return;
+        }
+
+        float distance = Tools.Distance(Target.model.transform, model.transform);
+        //Debug.LogError(distance + "  " + data.HitRange, gameObject);
+
+
+        if(distance<= data.HitRange)
+        {
+            if (attackTime >= data.AttackTime)
+            {
+                attackTime -= data.AttackTime;
+
+                for (int i = 0; i < data.ShootNum; i++)
+                {
+                    Bullet bullet = Instantiate(DataLoader.instance.GetPrefab("Bullet"), bulletSpawner.position, Quaternion.identity, GameManager.instance.transform).GetComponent<Bullet>();
+                    Vector3 offset = Random.Range(0, data.AttackOffset) * new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f).normalized;
+                    bullet.SetBullet(Target.model.gameObject, Fold, data.Atk, data.BulletSpeed, offset);
+                }
+            }
+        }     
     }
 
     /// <summary>
@@ -284,9 +283,17 @@ public class Unit : MonoBehaviour
         {
             Unit temp = EnemiesInField[i];
 
+            if (temp == null)
+            {
+                // 找到空的就删了
+                EnemiesInField.RemoveAt(i);
+                continue;
+            }
+
             // 跳过死亡的
             if (temp.state == UnitState.death)
             {
+                EnemiesInField.RemoveAt(i);
                 continue;
             }
 
@@ -345,6 +352,9 @@ public class UnitData
     public float AttackOffset;
     public float ShootNum;
     public float BulletSpeed;
+    public int AttackType;
+    public int TargetType;
+    public int IsGround;
 
     public UnitData()
     {
@@ -364,6 +374,9 @@ public class UnitData
         AttackOffset = 0;
         ShootNum = 1;
         BulletSpeed = 5;
+        AttackType = 0;
+        TargetType = 0;
+        IsGround = 1;
     }
 
     public UnitData(UnitData data)
@@ -384,6 +397,9 @@ public class UnitData
         AttackOffset = data.AttackOffset;
         ShootNum = data.ShootNum;
         BulletSpeed = data.BulletSpeed;
+        AttackType = data.AttackType;
+        TargetType = data.TargetType;
+        IsGround = data.IsGround;
     }
 }
 

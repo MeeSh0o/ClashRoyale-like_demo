@@ -76,7 +76,9 @@ public static class Tools
             AttackOffset = String2Float(data[13]),
             ShootNum = String2Float(data[14]),
             BulletSpeed = String2Float(data[15]),
-
+            AttackType = String2Int(data[16]),
+            TargetType = String2Int(data[17]),
+            IsGround = String2Int(data[18])
         };
         return temp;
     }
